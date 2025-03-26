@@ -6,6 +6,8 @@ use App\Models\Resident;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
+
+
 class ResidentController extends Controller
 {
     public function index()
@@ -47,17 +49,17 @@ class ResidentController extends Controller
 
     public function edit($id) {
 
-        $residents = Resident::findOrFail($id);
+        $resident= Resident::findOrFail($id);
         
         return view('pages.resident.edit' , [
-            'resident' => $residents,
+            'resident' => $resident,
         ]);
         
     }
 
     public function update(Request $request, $id) {
 
-        $validated = $request->validate([
+        $validatedData = $request->validate([
             'nik' => ['required', 'min:16', 'max:16'],
             'name' => ['required',  'max:100'],
             'gender' => ['required', Rule::in(['male', 'female'])],
@@ -71,8 +73,11 @@ class ResidentController extends Controller
             'status' => ['required' , Rule::in(['active' , 'moved' , 'deceased'])],
         ]);
 
-        
-        Resident::findOrFile($id)->update($request->validate());
+           // Cari data berdasarkan ID
+    $resident = Resident::findOrFail($id);
+
+    // Update data
+    $resident->update($validatedData);
 
         return redirect('/resident')->with('success' , 'Berhasil mengubah data');
 

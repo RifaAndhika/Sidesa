@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800">Tambah Penduduk</h1>
+    <h1 class="h3 mb-0 text-gray-800">Ubah Penduduk</h1>
 </div>
 
 {{-- 
@@ -14,17 +14,17 @@
 @endif --}}
 <div class="row">
     <div class="col">
-        <form action="/resident" method="post">
+        <form action="/resident/{{ $resident->id }}" method="post">
             @csrf
-            @method('POST')
+            @method('PUT')
             <div class="card">
                 <div class="card-body">
                     <div class="form-group mb-3">
                         <label for="nik">NIK</label>
                         <input type="number" autocomplete="off" maxlength="16" inputmode="numeric" name="nik" id="nik" class="form-control
-                         @error('nik') is-invalid @enderror" value="{{ old('nik') }}">
+                         @error('nik') is-invalid @enderror" value="{{ old('nik', $resident->nik) }}">
                         @error('nik')
-                            <span class="is-invalid">
+                            <span class="invalid-feedback">
                                 {{ $message }}
                             </span>
                         @enderror
@@ -32,9 +32,9 @@
                     <div class="form-group mb-3">
                         <label for="name">Nama Lengkap</label>
                         <input type="text" autocomplete="off" name="name" inputmode="numeric" id="name" class="form-control
-                        @error('name') is-invalid @enderror" value="{{ old('name') }}">
+                        @error('name') is-invalid @enderror" value="{{ old('name', $resident->name) }}">
                         @error('name')
-                        <span class="is-invalid">
+                        <span class="invalid-feedback">
                             {{ $message }}
                         </span>
                     @enderror
@@ -53,7 +53,7 @@
                         "value" => "female",
                     ],  
                         ] as $item )
-                            <option value="{{ $item->value  }}" @selected(old('gender') == $item->value)>
+                            <option value="{{ $item->value  }}" @selected(old('gender', $resident->gender) == $item->value)>{{ $item->label }}</option>
                                 {{ $item->label }}</option>
                                 @endforeach
                         </select>
@@ -66,9 +66,9 @@
                     <div class="form-group mb-3">
                         <label for="birth_date">Tanggal Lahir</label>
                         <input type="date" name="birth_date"  id="birth_date" class="form-control 
-                         @error('birth_date') is-invalid @enderror" value="{{ old('birth_date') }}">
+                         @error('birth_date') is-invalid @enderror" value="{{ old('birth_date' , $resident->birth_date) }}">
                         @error('birth_date')
-                        <span class="invalid-feedback"
+                        <span class="invalid-feedback">
                             {{ $message }}
                         </span>
                     @enderror
@@ -76,9 +76,9 @@
                     <div class="form-group mb-3">
                         <label for="birth_place">Tempat Lahir</label>
                         <input type="text" name="birth_place" autocomplete="off"  id="birth_place" class="form-control 
-                         @error('birth_place') is-invalid @enderror" value="{{ old('birth_place') }}">
+                         @error('birth_place') is-invalid @enderror" value="{{ old('birth_place', $resident->birth_place) }}">
                         @error('birth_place')
-                        <span class="invalid-feedback"
+                        <span class="invalid-feedback">
                             {{ $message }}
                         </span>
                     @enderror
@@ -86,9 +86,9 @@
                     <div class="form-group mb-3">
                         <label for="address">Alamat</label>
                         <textarea name="address" id="address" cols="30" rows="10" class="form-control  
-                        @error('address') is-invalid @enderror">{{ old('address') }}</textarea>
+                        @error('address') is-invalid @enderror"> {{ old('address', $resident->address) }}</textarea>
                         @error('address')
-                        <span class="invalid-feedback"
+                        <span class="invalid-feedback">
                             {{ $message }}
                         </span>
                     @enderror
@@ -96,9 +96,9 @@
                     <div class="form-group mb-3">
                         <label for="religion">Agama</label>
                         <input type="text" autocomplete="off" name="religion"  id="religion" class="form-control 
-                         @error('religion') is-invalid @enderror" value="{{ old('religion') }}">
+                         @error('religion') is-invalid @enderror" value="{{ old('religion' , $resident->religion) }}">
                         @error('religion')
-                        <span class="invalid-feedback"
+                        <span class="invalid-feedback">
                             {{ $message }}
                         </span>
                     @enderror
@@ -125,12 +125,12 @@
                                     "value" => "widowed",
                                 ],
                             ] as $item)
-                            <option value="{{ $item->value  }}" @selected(old('marital_status') == $item->value)>
+                            <option value="{{ $item->value  }}" @selected(old('marital_status', $resident->marital_status) == $item->value)>
                                 {{ $item->label }}</option>
                                 @endforeach
                             </select>
                             @error('marital_status')
-                            <span class="invalid-feedback"
+                            <span class="invalid-feedback">
                                 {{ $message }}
                             </span>
                         @enderror
@@ -138,9 +138,9 @@
                     <div class="form-group mb-3">
                         <label for="occupation">Pekerjaan</label>
                         <input type="text" autocomplete="off" name="occupation"  id="occupation" class="form-control  
-                        @error('occupation') is-invalid @enderror" value="{{ old('occupation') }}">
+                        @error('occupation') is-invalid @enderror" value="{{ old('occupation' , $resident->occupation) }}">
                         @error('occupation')
-                        <span class="invalid-feedback"
+                        <span class="invalid-feedback">
                             {{ $message }}
                         </span>
                     @enderror
@@ -148,9 +148,9 @@
                     <div class="form-group mb-3">
                         <label for="phone">Telepon</label>
                         <input type="text" autocomplete="off" maxlength="13" minlength="12" name="phone" inputmode="numeric"  id="phone" class="form-control  
-                        @error('phone') is-invalid @enderror" value="{{ old('phone') }}">   
+                        @error('phone') is-invalid @enderror" value="{{ old('phone', $resident->phone) }}">   
                         @error('phone')
-                        <span class="invalid-feedback"
+                        <span class="invalid-feedback">
                             {{ $message }}
                         </span>
                     @enderror
@@ -172,12 +172,12 @@
                                     "value" => "diceased",
                                 ],
                             ] as $item)
-                              <option value="{{ $item->value  }}" @selected(old('status') == $item->value)>
+                              <option value="{{ $item->value  }}" @selected(old('status', $resident->status) == $item->value)>
                                 {{ $item->label }}</option>
                             @endforeach
                         </select>
                             @error('status')
-                            <span class="invalid-feedback"
+                            <span class="invalid-feedback">
                                 {{ $message }}
                             </span>
                         @enderror
@@ -190,8 +190,8 @@
                     <a href="/resident" class="btn btn-outline-secondary">
                         Kembali
                     </a>
-                    <button type="submit" class="btn btn-primary">
-                        Simpan
+                    <button type="submit" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirmationDelete">
+                        Simpan Perubahan
                     </button>
                 </div>
             </div>

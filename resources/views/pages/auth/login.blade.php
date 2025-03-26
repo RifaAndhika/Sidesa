@@ -24,10 +24,10 @@
 
 <body class="bg-gradient-primary">
 
-    @if ($errors->any())
+    {{-- @if ($errors->any())
       @dd($errors->all())
         
-    @endif
+    @endif --}}
 
     <div class="container">
 
