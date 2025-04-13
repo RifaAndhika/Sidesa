@@ -16,6 +16,7 @@
                         <table class=" table table-responsive table-bordered table-hovered">
                                 <thead>
                                         <tr>
+                                                <th>No</th>
                                                 <th>Nik</th>
                                                 <th>Nama</th>
                                                 <th>Jenis Kelamin</th>
@@ -39,8 +40,10 @@
                                         </tbody>
                                 @else
                                 <tbody>
+                                        
                                         @foreach ( $residents as $item)   
-                                        <tr>
+                                        <tr>    
+                                                <td>{{ $loop->iteration }}</td>
                                                 <td>{{ $item->nik }}</td>
                                                 <td>{{ $item->name }}</td>
                                                 <td>{{ $item->gender }}</td>
