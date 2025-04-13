@@ -11,6 +11,11 @@
                 'path' => 'resident',
                 'icon' => 'fas fa-fw fa-table',
             ],
+            (object) [
+                'title' => 'Permintaan akun',
+                'path' => 'account-request',
+                'icon' => 'fas fa-fw fa-user',
+            ],
         ],
             2 => [
                 (object) [

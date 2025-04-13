@@ -23,3 +23,6 @@ Route::get('/resident/{id}' , [ResidentController::class , 'edit'])->middleware(
 Route::post('/resident' , [ResidentController::class , 'store'])->middleware('role:Admin');
 Route::put('/resident/{id}' , [ResidentController::class , 'update'])->middleware('role:Admin');
 Route::delete('/resident/{id}' , [ResidentController::class , 'destroy'])->middleware('role:Admin');
+
+
+Route::get('/account-request', [UserController::class , 'account_request_view']);
