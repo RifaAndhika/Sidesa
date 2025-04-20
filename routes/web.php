@@ -27,3 +27,7 @@ Route::delete('/resident/{id}' , [ResidentController::class , 'destroy'])->middl
 
 
 Route::get('/account-request', [UserController::class , 'account_request_view']);
+Route::post('/account-request/approval/{id}', [UserController::class , 'account_approval']);
+
+
+
