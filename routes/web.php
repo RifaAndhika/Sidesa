@@ -3,8 +3,12 @@
 use App\Http\Controllers\ResidentController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
+use App\Models\Role;
 use Illuminate\Support\Facades\Route;
 
+Route::fallback(function(){
+    return view('view404');
+});
 
 Route::get('/' , [AuthController::class, 'login']);
 Route::post('/login' , [AuthController::class, 'authenticate']);
@@ -18,6 +22,7 @@ Route::get('/dashboard', function () {
 });
 
 
+
 Route::get('/resident' , [ResidentController::class , 'index'])->middleware('role:Admin');
 Route::get('/resident/create' , [ResidentController::class , 'create'])->middleware('role:Admin');
 Route::get('/resident/{id}' , [ResidentController::class , 'edit'])->middleware('role:Admin');
@@ -26,8 +31,11 @@ Route::put('/resident/{id}' , [ResidentController::class , 'update'])->middlewar
 Route::delete('/resident/{id}' , [ResidentController::class , 'destroy'])->middleware('role:Admin');
 
 
-Route::get('/account-request', [UserController::class , 'account_request_view']);
-Route::post('/account-request/approval/{id}', [UserController::class , 'account_approval']);
+Route::get('/account-list' , [UserController::class, 'account_list_view'])->middleware('role:Admin');
+
+Route::get('/account-request', [UserController::class , 'account_request_view'])->middleware('role:Admin');
+Route::post('/account-request/approval/{id}', [UserController::class , 'account_approval'])->middleware('role:Admin');
+
 
 
 

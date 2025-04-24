@@ -13,8 +13,8 @@ class UserController extends Controller
 return view('pages.account-request.index', [
     'users' => $users,
 ]);
-    }
 
+    }
 
         public function account_approval(Request $request, $userId){
 
@@ -29,4 +29,13 @@ return view('pages.account-request.index', [
             return back()->with('success', $for == 'approve' ? 'Berhasil menyetujui akun' : 'Berhasil menolak akun');
         }
 
+        public function account_list_view() {
+
+            $users = User::where('role_id', 2)->get();
+
+            return view('pages.account-list.index' , [
+                'users' => $users,
+            ]);
+
+        }
 }
