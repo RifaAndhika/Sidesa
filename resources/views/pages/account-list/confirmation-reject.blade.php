@@ -6,18 +6,18 @@
         @method('POST')
         <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="confirmationRejectLabel">Konfirmasi Penolakan</h5>
+              <h5 class="modal-title" id="confirmationRejectLabel">Konfirmasi Nonaktif</h5>
               <button type="button" class="btn btn-default" data-bs-dismiss="modal" aria-label="Close">
                 <i class="fas fa-times"></i>
               </button>
             </div>
             <div class="modal-body">
-                <input type="hidden" name="for" value="reject">
-                <span>Apakah Anda yakin ingin menolak akun ini?</span>
+                <input type="hidden" name="for" value="deactivate">
+                <span>Apakah Anda yakin ingin Menonaktifkan akun ini?</span>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-              <button type="submit" class="btn btn-outline btn-danger" >Ya, Setujui!</button>
+              <button type="submit" class="btn btn-outline btn-danger" >Ya!</button>
             </div>
           </div></form>
     </div>

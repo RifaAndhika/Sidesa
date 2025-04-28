@@ -6,18 +6,18 @@
         @method('POST')
         <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="confirmationApproveLabel">Konfirmasi Setujui</h5>
+              <h5 class="modal-title" id="confirmationApproveLabel">Konfirmasi aktifkan</h5>
               <button type="button" class="btn btn-default" data-bs-dismiss="modal" aria-label="Close">
                 <i class="fas fa-times"></i>
               </button>
             </div>
             <div class="modal-body">
-                <input type="hidden" name="for" value="approve">
-                <span>Apakah Anda yakin ingin menyetujui akun ini?</span>
+                <input type="hidden" name="for" value="activate">
+                <span>Apakah Anda yakin ingin mengaktifkan akun ini?</span>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-              <button type="submit" class="btn btn-success" >Ya, Setujui!</button>
+              <button type="submit" class="btn btn-success" >Ya, aktifkan!</button>
             </div>
           </div></form>
     </div>

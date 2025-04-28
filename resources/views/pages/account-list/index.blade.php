@@ -29,6 +29,7 @@
                                             <th>No</th>
                                             <th>Nama</th>
                                             <th>Email</th>
+                                            <th>Status</th>
                                             <th>Aksi</th>
                                     </tr>
                             </thead>
@@ -49,18 +50,28 @@
                                             <td>{{ $item->name }}</td>
                                             <td>{{ $item->email }}</td>
                                             <td>
-                                                    <div class="d-flex" style="gap: 10px">
-                                                        <button  type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#confirmationReject-{{ $item->id }}">
-                                                       Tolak
+                                                @if ($item->status == 'approved')
+                                                    <span class="badge badge-success">Aktif</span>
+                                                @else
+                                                    <span class="badge badge-danger">Tidak aktif</span>
+                                                @endif
+                                            </td>
+                                            <td>
+                                             <div class="d-flex" style="gap: 10px">
+                                                @if ($item->status == 'approved')
+                                                <button  type="button" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#confirmationReject-{{ $item->id }}">
+                                                    Non-Aktifkan akun
                                                         </button>
-                                                            <button  type="button" class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#confirmationApprove-{{ $item->id }}">
-                                                           Setuju
-                                                            </button>
+                                            @else
+                                            <button  type="button" class="btn btn-sm btn-outline-success" data-bs-toggle="modal" data-bs-target="#confirmationApprove-{{ $item->id }}">
+                                                    Aktifkan akun
+                                                    </button>
+                                            @endif
                                                     </div>
                                             </td>
                                     </tr>
-                                    @include('pages.account-request.confirmation-reject')
-                                    @include('pages.account-request.confirmation-approve')
+                                    @include('pages.account-list.confirmation-reject')
+                                    @include('pages.account-list.confirmation-approve')
                                     @endforeach
                             </tbody>
                             @endif
