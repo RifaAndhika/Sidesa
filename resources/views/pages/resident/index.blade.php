@@ -1,11 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
-    
+
    <!-- Page Heading -->
    <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">Data Penduduk</h1>
-    <a href="/resident/create" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+    <a href="/resident/create"  class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm  me-2"><i
             class="fas fa-plus fa-sm text-white-50"></i> Tambah</a>
 </div>
 
@@ -40,9 +40,9 @@
                                         </tbody>
                                 @else
                                 <tbody>
-                                        
-                                        @foreach ( $residents as $item)   
-                                        <tr>    
+
+                                        @foreach ( $residents as $item)
+                                        <tr>
                                                 <td>{{ $loop->iteration }}</td>
                                                 <td>{{ $item->nik }}</td>
                                                 <td>{{ $item->name }}</td>
@@ -69,7 +69,7 @@
                                         </tr>
                                         @include('pages.resident.confirmation-delete')
                                         @endforeach
-                                </tbody>   
+                                </tbody>
                                 @endif
                                </table>
                       </div>

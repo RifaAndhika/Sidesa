@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
@@ -17,6 +19,10 @@ return view('pages.account-request.index', [
     }
 
         public function account_approval(Request $request, $userId){
+
+            $request->validate([
+                'status' => ['required', Rule::in(['approve', 'reject' , 'activate' , 'deactivate'])],
+            ]);
 
             $for = $request->input('for');
 
@@ -42,4 +48,47 @@ return view('pages.account-request.index', [
             ]);
 
         }
+
+        public function profile_view(){
+            return view('pages.profile.index');
+        }
+        public function update_profile(Request $request , $UserId){
+            $request->validate([
+                'name' => 'required|min:3',
+            ]);
+
+            $user = User::findOrFail($UserId);
+            $user->name = $request->input('name');
+            $user->save();
+
+            return back()->with('success', 'Berhasil mengubah data profile');
+        }
+
+        public function change_password_view(){
+            return view('pages.profile.change-password');
+        }
+
+        public function change_password(Request $request , $UserId){
+            $request->validate([
+                'old_password' => 'required|min:8',
+                'new_password' => 'required|min:8',
+            ]);
+
+
+            $user = User::findOrFail($UserId);
+
+            $curentpasswordIsValid = Hash::check($request->input('old_password'), $user->password);
+
+            if($curentpasswordIsValid){
+
+                 $user->password = $request->input('new_password');
+                $user->save();
+
+                return back()->with('success', 'Berhasil mengubah password');
+
+            }
+
+            return back()->with('error', 'Gagal mengubah password, password lama tidak sesuai');
+        }
+
 }
