@@ -12,7 +12,7 @@ class ResidentController extends Controller
 {
     public function index()
     {
-        $residents = Resident::with('user')->get();
+        $residents = Resident::with('user')->paginate(5);
 
         return view('pages.resident.index', [
             'residents' => $residents,
@@ -28,7 +28,7 @@ class ResidentController extends Controller
     public function store(Request $request){
 
         $validatedData = $request->validate([
-            'nik' => ['required', 'min:16', 'max:16'],
+            'nik' => ['required', 'digits:16'],
             'name' => ['required',  'max:100'],
             'gender' => ['required', Rule::in(['male', 'female'])],
             'birth_date' => ['required', 'string'],
@@ -60,7 +60,7 @@ class ResidentController extends Controller
     public function update(Request $request, $id) {
 
         $validatedData = $request->validate([
-            'nik' => ['required', 'min:16', 'max:16', 'numeric'],
+            'nik' => ['required', 'digits:16'],
             'name' => ['required',  'max:100'],
             'gender' => ['required', Rule::in(['male', 'female'])],
             'birth_date' => ['required', 'string'],
