@@ -12,7 +12,7 @@ class ResidentController extends Controller
 {
     public function index()
     {
-        $residents = Resident::all();
+        $residents = Resident::with('user')->get();
 
         return view('pages.resident.index', [
             'residents' => $residents,
@@ -22,7 +22,7 @@ class ResidentController extends Controller
 
     public function create() {
         return view('pages.resident.create');
-        
+
     }
 
     public function store(Request $request){
@@ -41,7 +41,7 @@ class ResidentController extends Controller
             'status' => ['required' , Rule::in(['active' , 'moved' , 'deceased'])],
         ]);
 
-        
+
         Resident::create($validatedData);
 
         return redirect('/resident')->with('success' , 'Berhasil menambahkan data');
@@ -50,17 +50,17 @@ class ResidentController extends Controller
     public function edit($id) {
 
         $resident= Resident::findOrFail($id);
-        
+
         return view('pages.resident.edit' , [
             'resident' => $resident,
         ]);
-        
+
     }
 
     public function update(Request $request, $id) {
 
         $validatedData = $request->validate([
-            'nik' => ['required', 'min:16', 'max:16'],
+            'nik' => ['required', 'min:16', 'max:16', 'numeric'],
             'name' => ['required',  'max:100'],
             'gender' => ['required', Rule::in(['male', 'female'])],
             'birth_date' => ['required', 'string'],
@@ -81,7 +81,7 @@ class ResidentController extends Controller
 
         return redirect('/resident')->with('success' , 'Berhasil mengubah data');
 
-        
+
     }
 
     public function destroy($id) {
@@ -93,6 +93,6 @@ class ResidentController extends Controller
 
 
         return redirect('/resident')->with('success' , 'Berhasil Menghapus Data');
-        
+
     }
 }

@@ -70,8 +70,8 @@
                                                     </div>
                                             </td>
                                     </tr>
-                                    @include('pages.account-list.confirmation-reject')
-                                    @include('pages.account-list.confirmation-approve')
+                                    @include('pages.account-list.confirmation-activate')
+                                    @include('pages.account-list.confirmation-deactivate')
                                     @endforeach
                             </tbody>
                             @endif

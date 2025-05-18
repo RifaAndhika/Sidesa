@@ -14,6 +14,7 @@
             <div class="modal-body">
                 <input type="hidden" name="for" value="activate">
                 <span>Apakah Anda yakin ingin mengaktifkan akun ini?</span>
+
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
