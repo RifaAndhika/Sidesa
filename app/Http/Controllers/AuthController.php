@@ -82,7 +82,7 @@ class AuthController extends Controller
         $user->role_id = 2; // => User (penduduk)
         $user->saveOrFail();
 
-        return redirect('/')->with('success', 'Berhasil mendaftar akun, menunngu persetujuan admin');
+        return redirect('/')->with('success', 'Berhasil mendaftar akun, menunggu persetujuan admin');
     }
 
     public function _logout(Request $request){

@@ -26,7 +26,7 @@
 
     @if ($errors->any())
       @dd($errors->all())
-        
+
     @endif
 
     <div class="container">
@@ -51,7 +51,7 @@
                                          @method('POST')
                                         <div class="form-group">
                                             <input type="text" name="name" class="form-control form-control-user"
-                                                id="InputName" 
+                                                id="InputName"
                                                 placeholder="Full name...">
                                         </div>
                                         <div class="form-group">
@@ -64,7 +64,7 @@
                                                 id="InputPassword" placeholder="Password">
                                         </div>
 
-                                        <button type="submit" class="btn btn-primary btn-user btn-block"> 
+                                        <button type="submit" class="btn btn-primary btn-user btn-block">
                                             Simpan
                                         </button>
                                         <hr>
@@ -97,4 +97,4 @@
 
 </body>
 
-</html> 
+</html>

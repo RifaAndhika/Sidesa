@@ -15,10 +15,10 @@ class UserController extends Controller
         $users = User::where('status', 'submitted')->paginate(5);
         $residents = Resident::where('user_id', null)->get();
 
-return view('pages.account-request.index', [
-    'users' => $users,
-    'residents' => $residents
-]);
+        return view('pages.account-request.index', [
+            'users' => $users,
+            'residents' => $residents
+        ]);
 
     }
 
@@ -95,7 +95,7 @@ return view('pages.account-request.index', [
 
             if($curentpasswordIsValid){
 
-                 $user->password = $request->input('new_password');
+                $user->password = Hash::make($request->input('new_password'));
                 $user->save();
 
                 return back()->with('success', 'Berhasil mengubah password');
