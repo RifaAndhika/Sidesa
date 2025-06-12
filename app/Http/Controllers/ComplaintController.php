@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Role;
+use App\Models\User;
+use App\Notifications\ComplaintStatusChanged;
 
 class ComplaintController extends Controller
 {
@@ -146,7 +148,7 @@ class ComplaintController extends Controller
         {
             $user = Auth::user()->resident;
             // Cek apakah user adalah admin (role_id == 1)
-            if (Auth::user()->role_id !== 1 && !$user) {
+            if (Auth::user()->role_id !== \App\Models\Role::ROLE_ADMIN && !$user) {
                 abort(403, 'Akses ditolak. Hanya admin yang dapat mengubah status.');
             }
 
@@ -157,8 +159,17 @@ class ComplaintController extends Controller
 
             // Update status complaint
             $complaint = Complaint::findOrFail($id);
+
+            $oldStatus = $complaint->status_label;
+
             $complaint->status = $request->input('status');
             $complaint->save();
+
+            $newStatus = $complaint->status_label;
+
+            User::where('id', $complaint->resident->user_id)
+                ->firstOrFail()
+                ->notify(new ComplaintStatusChanged($complaint, $oldStatus, $newStatus));
 
             return redirect()->back()->with('success', 'Status berhasil diperbarui.');
         }
