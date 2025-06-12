@@ -22,4 +22,10 @@ class Complaint extends Model
         {
             return \Carbon\Carbon::parse($this->report_data)->format('d M Y , H:i:s');
         }
-}
+
+
+        public function resident() {
+            return $this->belongsTo(Resident::class);
+        }
+
+    }

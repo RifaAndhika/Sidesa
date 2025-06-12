@@ -5,6 +5,7 @@ use App\Models\Complaint;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Role;
 
 class ComplaintController extends Controller
 {
@@ -14,14 +15,14 @@ class ComplaintController extends Controller
             $resident = $user->resident;
 
             // Jika user role 2 (warga) tapi belum punya data resident, beri peringatan
-            if ($user->role_id == 2 && !$resident) {
+            if ($user->role_id == \App\Models\Role::ROLE_USER && !$resident) {
                 session()->flash('resident_warning', 'Anda belum terhubung dengan data Penduduk. Silakan hubungi admin.');
             }
 
             $residentId = $resident->id ?? null;
 
             // Ambil complaint hanya milik warga (jika warga), atau semua (jika admin)
-            $complaints = Complaint::when($user->role_id == 2, function ($query) use ($residentId) {
+            $complaints = Complaint::when($user->role_id == \App\Models\Role::ROLE_USER, function ($query) use ($residentId) {
                 $query->where('resident_id', $residentId);
             })->paginate(5);
 
@@ -30,7 +31,7 @@ class ComplaintController extends Controller
                 $complaint->can_edit_delete = false;
 
                 if (
-                    $user->role_id === 2 &&
+                    $user->role_id === \App\Models\Role::ROLE_USER &&
                     $resident &&
                     $complaint->status === 'new'
                 ) {
