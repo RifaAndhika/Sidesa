@@ -12,7 +12,12 @@ Route::fallback(function(){
     return view('view404');
 });
 
-Route::get('/' , [AuthController::class, 'login']);
+Route::get('/', function () {
+    return view('pages.landing');
+});
+
+
+Route::get('/login' , [AuthController::class, 'login']);
 Route::post('/login' , [AuthController::class, 'authenticate']);
 Route::post('/logout' , [AuthController::class, 'logout']);
 Route::get('/register' , [AuthController::class, 'registerView']);
@@ -75,4 +80,6 @@ Route::post('/complaint/update-status/{id}', [ComplaintController::class, 'updat
 //     'index' , 'create' , 'edit' , 'store' , 'update' , 'destroy'
 // ]);
 
-
+Route::get('/about-me', function () {
+    return view('pages.about-me');
+});
