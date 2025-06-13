@@ -6,6 +6,7 @@ use App\Http\Controllers\ComplaintController;
 use App\Http\Controllers\UserController;
 use App\Models\Role;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\DB;
 
 Route::fallback(function(){
     return view('view404');
@@ -21,6 +22,25 @@ Route::post('/register' , [AuthController::class, 'register']);
 Route::get('/dashboard', function () {
     return view('pages.dashboard');
 });
+
+Route::get('/notifications' , function () {
+    return view('pages.notifications.index');
+})->middleware('role:Admin,User');
+
+Route::post('notification/{id}/read', function ($id) {
+    $notification = DB::table('notifications')->where('id', $id);
+    $notification->update([
+        'read_at' => DB::raw('CURRENT_TIMESTAMP'),
+    ]);
+
+    $dataArray = json_decode($notification->firstOrFail()->data, true);
+
+
+  if(isset($dataArray['complaint_id'])) {
+    return redirect()->route('complaint');
+  }
+    return redirect()->back();
+})->middleware('role:Admin,User');
 
 
 
@@ -41,7 +61,6 @@ Route::get('/profile', [UserController::class , 'profile_view'])->middleware('ro
 Route::post('profile/{id}', [UserController::class , 'update_profile'])->middleware('role:Admin,User');
 Route::get('/change-password', [UserController::class , 'change_password_view'])->middleware('role:Admin,User');
 Route::post('/change-password/{id}', [UserController::class , 'change_password'])->middleware('role:Admin,User');
-
 
 
 Route::get('/complaint' , [ComplaintController::class , 'index'])->middleware('role:User,Admin')->name('complaint');

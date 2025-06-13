@@ -61,26 +61,34 @@
                     Notifikasi
                 </h6>
 
-              @foreach ( auth()->user()->unreadNotifications as $notification)
-                    <a class="dropdown-item d-flex align-items-center" href="#" style="background-color: rgba(115, 195, 255, {{ is_null($notification->read_at) ? '0.1'  : '0.0'}})">
-                    <div class="mr-3">
-                        <div class="icon-circle bg-primary">
-                            <i class="fas fa-file-alt text-white"></i>
+              @foreach(auth()->user()->notifications as $notification)
+                <form id="formNotification-{{ $notification->id }}" action="/notification/{{ $notification->id }}/read" method="POST" class="w-100">
+                   <div class="dropdown-item d-flex align-items-center"
+                        style="background-color: rgba(115, 195, 255, {{ is_null($notification->read_at) ? '0.1' : '0.0' }}); cursor: pointer;"
+                        onclick="document.getElementById('formNotification-{{ $notification->id }}').submit()">
+                        @csrf
+                        @method('POST')
+                        <div class="mr-3">
+                            <div class="icon-circle bg-primary">
+                                <i class="fas fa-file-alt text-white"></i>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="small text-gray-500">{{ $notification->created_at->diffForHumans() }}</div>
+                           <span class="{{ is_null($notification->read_at) ? 'font-weight-bold' : 'text-muted' }}">
+                                {{ $notification->data['message'] }}
+                            </span>
                         </div>
                     </div>
-                    <div>
-                        <div class="small text-gray-500">{{ $notification->created_at->diffForHumans() }}</div>
-                        <span class="font-weight-bold">{{ $notification->data['message'] }}</span>
-                    </div>
-                </a>
+                </form>
               @endforeach
 
-                <a class="dropdown-item text-center small text-gray-500" href="#">Semua Notifikasi</a>
+                <a class="dropdown-item text-center small text-gray-500" href="/notifications">Semua Notifikasi</a>
             </div>
         </li>
 
         <!-- Nav Item - Messages -->
-        <li class="nav-item dropdown no-arrow mx-1">
+        {{-- <li class="nav-item dropdown no-arrow mx-1">
             <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button"
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="fas fa-envelope fa-fw"></i>
@@ -143,7 +151,7 @@
                 </a>
                 <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
             </div>
-        </li>
+        </li> --}}
 
         <div class="topbar-divider d-none d-sm-block"></div>
 
