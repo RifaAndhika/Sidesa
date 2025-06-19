@@ -56,12 +56,28 @@ class UserController extends Controller
         public function account_list_view() {
 
             $users = User::where('role_id', 2)->where('status', '!=' ,'submitted')->paginate(5);
+            $residents = Resident::where('user_id', null)->get();
 
             return view('pages.account-list.index' , [
                 'users' => $users,
+                'residents' => $residents
             ]);
 
         }
+
+        public function destroy_user($id)
+        {
+            $user = User::findOrFail($id);
+
+            if ($user->status === 'approved') {
+                return back()->with('error', 'Akun aktif tidak dapat dihapus.');
+            }
+
+            $user->delete();
+
+            return back()->with('success', 'Akun berhasil dihapus.');
+        }
+
 
         public function profile_view(){
             return view('pages.profile.index');

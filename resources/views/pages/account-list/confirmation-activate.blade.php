@@ -14,6 +14,15 @@
             <div class="modal-body">
                 <input type="hidden" name="for" value="activate">
                 <span>Apakah Anda yakin ingin mengaktifkan akun ini?</span>
+                <div class="form-group mt-3">
+                    <label for="resident_id">Pilih Penduduk</label>
+                    <select name="resident_id" id="resident_id" class="form-control">
+                        <option value="">Tidak Ada</option>
+                        @foreach ($residents as $item)
+                            <option value="{{ $item->id }}">{{ $item->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
 
             </div>
             <div class="modal-footer">

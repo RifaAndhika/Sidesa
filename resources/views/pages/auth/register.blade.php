@@ -17,6 +17,7 @@
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
 
+
     <!-- Custom styles for this template-->
     <link href="{{ asset('template/css/sb-admin-2.min.css') }}" rel="stylesheet">
 
@@ -24,10 +25,7 @@
 
 <body class="bg-gradient-primary">
 
-    @if ($errors->any())
-      @dd($errors->all())
 
-    @endif
 
     <div class="container">
 
@@ -46,25 +44,50 @@
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4">Register!</h1>
                                     </div>
-                                    <form class="user" action="/register" method="post">
+                                    <form class="user" action="/register" method="post" onsubmit="const submitBtn = document.getElementById('submitBtn'); submitBtn.disabled
+                                    = true; submitBtn.textContent = 'Loading...';">
                                          @csrf
                                          @method('POST')
+
                                         <div class="form-group">
-                                            <input type="text" name="name" class="form-control form-control-user"
+                                         <input type="text" name="name"
+                                                class="form-control form-control-user @error('name') is-invalid @enderror"
                                                 id="InputName"
-                                                placeholder="Full name...">
-                                        </div>
-                                        <div class="form-group">
-                                            <input type="email" name="email" class="form-control form-control-user"
-                                                id="InputEmail" aria-describedby="emailHelp"
-                                                placeholder="Enter Email Address...">
-                                        </div>
-                                        <div class="form-group">
-                                            <input type="password" name="password" class="form-control form-control-user"
-                                                id="InputPassword" placeholder="Password">
+                                                placeholder="Nama Lengkap">
+
+                                                @error('name')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                @enderror
                                         </div>
 
-                                        <button type="submit" class="btn btn-primary btn-user btn-block">
+
+                                        <div class="form-group">
+                                               <input type="email" name="email"
+                                                class="form-control form-control-user @error('email') is-invalid @enderror"
+                                                id="InputEmail" placeholder="Masukkan Alamat Email">
+
+                                                @error('email')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                @enderror
+                                        </div>
+
+                                        <div class="form-group">
+                                            <input type="password" name="password"
+                                                class="form-control form-control-user @error('password') is-invalid @enderror"
+                                                id="InputPassword" placeholder="Masukan Password">
+
+                                                @error('password')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                @enderror
+                                        </div>
+
+                                        <button id="submitBtn" type="submit" class="btn btn-primary btn-user btn-block">
                                             Simpan
                                         </button>
                                         <hr>
@@ -87,7 +110,7 @@
     </div>
 
     <!-- Bootstrap core JavaScript-->
-    <script src="{{ asset('template/vendor/jquery/jquery.min.js') }}"></script>
+    {{-- <script src="{{ asset('template/vendor/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('template/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 
     <!-- Core plugin JavaScript-->
@@ -95,6 +118,20 @@
 
     <!-- Custom scripts for all pages-->
     <script src="{{ asset('template/js/sb-admin-2.min.js') }}"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> --}}
+
+{{-- @if ($errors->any())
+    <script>
+        Swal.fire({
+            icon: 'error',
+            title: 'Kesalahan!',
+            html: {!! json_encode(implode('<br>', $errors->all())) !!},
+            confirmButtonText: 'Tutup'
+        });
+    </script>
+@endif --}}
+
 
 </body>
 

@@ -24,6 +24,8 @@ Route::get('/register' , [AuthController::class, 'registerView']);
 Route::post('/register' , [AuthController::class, 'register']);
 
 
+
+
 Route::get('/dashboard', function () {
     return view('pages.dashboard');
 });
@@ -58,6 +60,8 @@ Route::delete('/resident/{id}' , [ResidentController::class , 'destroy'])->middl
 
 
 Route::get('/account-list' , [UserController::class, 'account_list_view'])->middleware('role:Admin');
+
+Route::delete('/users/{id}', [UserController::class, 'destroy_user'])->name('users.destroy')->middleware('role:Admin');
 
 Route::get('/account-request', [UserController::class , 'account_request_view'])->middleware('role:Admin');
 Route::post('/account-request/approval/{id}', [UserController::class , 'account_approval'])->middleware('role:Admin');

@@ -64,26 +64,30 @@ class AuthController extends Controller
         return view('pages.auth.register');
     }
 
+        public function register(Request $request)
+        {
+            $validated = $request->validate([
+                'name' => ['required'],
+                'email' => ['required', 'email', 'unique:users,email'],
+                'password' => ['required', 'string', 'min:8'],
+            ], [
+                'name.required' => 'Nama harus diisi.',
+                'email.unique' => 'Email ini sudah terdaftar.',
+                'email.required' => 'Email harus diisi.',
+                'email.email' => 'Email tidak valid.',
+                'password.min' => 'Kata sandi harus minimal 8 karakter.',
+            ]);
 
-    public function register(Request $request){
-        if(Auth::check()){
-            return back();
+            $user = new User();
+            $user->name = $validated['name'];
+            $user->email = $validated['email'];
+            $user->password = Hash::make($validated['password']);
+            $user->role_id = 2;
+            $user->saveOrFail();
+
+            return redirect('/login')->with('success', 'Berhasil mendaftar akun, menunggu persetujuan admin');
         }
-        $validated = $request->validate([
-            'name' =>['required'],
-            'email' => ['required', 'email'],
-            'password' => ['required'],
-        ]);
 
-        $user = new User();
-        $user->name = $request->input('name');
-        $user->email = $request->input('email');
-        $user->password = Hash::make($request->input('password'));
-        $user->role_id = 2; // => User (penduduk)
-        $user->saveOrFail();
-
-        return redirect('/')->with('success', 'Berhasil mendaftar akun, menunggu persetujuan admin');
-    }
 
     public function _logout(Request $request){
 

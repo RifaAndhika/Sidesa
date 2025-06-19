@@ -1,8 +1,9 @@
 @extends('layouts.app')
 
+@section('title', 'Pengaduan')
+
 @section('content')
 
-<!-- Page Heading -->
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">{{ auth()->user()->role_id == \App\Models\Role::ROLE_ADMIN ? 'Aduan Warga' : 'Aduan' }}</h1>
     @if($resident)
@@ -33,13 +34,15 @@
         <div class="card shadow mb-4">
             <div class="card-body">
                 <div class="table-responsive">
-                    <table class="table table-bordered table-hover w-100" id="complaintsTable" width="100%" cellspacing="0">
+                    <table id="table" class="table table-bordered table-hover w-100" id="complaintsTable" width="100%" cellspacing="0">
                         <thead class="table-light">
                             <tr>
                                 <th style="width: 5%">No</th>
+
                                 @if (auth()->user()->role_id == \App\Models\Role::ROLE_ADMIN)
                                 <th>Nama</th>
                                 @endif
+
                                 <th style="width: 15%">Judul</th>
                                 <th style="width: 25%">Isi Aduan</th>
                                 <th style="width: 10%">Status</th>
@@ -48,6 +51,7 @@
                                 <th style="width: 10%">Aksi</th>
                             </tr>
                         </thead>
+
                         @if ($complaint->isEmpty())
                         <tbody>
                             <tr>
@@ -55,13 +59,16 @@
                             </tr>
                         </tbody>
                         @else
+
                         <tbody>
                             @foreach ($complaint as $index => $item)
                             <tr>
                                 <td>{{ $complaint->firstItem() + $index }}</td>
+
                                 @if (auth()->user()->role_id == \App\Models\Role::ROLE_ADMIN)
                                 <td>{{ $item->resident->name }}</td>
                                 @endif
+
                                 <td>{{ $item->title }}</td>
                                 <td>{!! nl2br(e(wordwrap($item->content, 100))) !!}</td>
 

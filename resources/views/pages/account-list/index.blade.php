@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', 'Daftar Akun')
+
 @section('content')
 
    <!-- Page Heading -->
@@ -23,7 +25,7 @@
                 <div class="card shadow">
                       <div class="card-body">
                      <div style="overflow-x: auto;">
-                        <table class=" table table-bordered table-hovered" style="min-width: 100%">
+                        <table id="table" class=" table table-bordered table-hovered" style="min-width: 100%">
                             <thead>
                                     <tr>
                                             <th>No</th>
@@ -58,15 +60,24 @@
                                             </td>
                                             <td>
                                              <div class="d-flex" style="gap: 10px">
-                                                @if ($item->status == 'approved')
-                                                <button  type="button" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#confirmationReject-{{ $item->id }}">
-                                                    Non-Aktifkan akun
+                                               @if ($item->status == 'approved')
+                                                        <button type="button" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#confirmationReject-{{ $item->id }}">
+                                                            Non-Aktifkan akun
                                                         </button>
-                                            @else
-                                            <button  type="button" class="btn btn-sm btn-outline-success" data-bs-toggle="modal" data-bs-target="#confirmationApprove-{{ $item->id }}">
-                                                    Aktifkan akun
-                                                    </button>
-                                            @endif
+                                                    @else
+                                                        <button type="button" class="btn btn-sm btn-outline-success" data-bs-toggle="modal" data-bs-target="#confirmationApprove-{{ $item->id }}">
+                                                            Aktifkan akun
+                                                        </button>
+
+                                                        <form action="{{ route('users.destroy', $item->id) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus akun ini?')">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit" class="btn btn-sm btn-outline-danger">
+                                                                Hapus Akun
+                                                            </button>
+                                                        </form>
+                                                    @endif
+
                                                     </div>
                                             </td>
                                     </tr>

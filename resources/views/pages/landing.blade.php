@@ -14,7 +14,7 @@
             <h1 class="text-xl font-bold text-blue-600">Aplikasi Pengaduan Masyarakat</h1>
             <div class="space-x-2">
                 <a href="{{ url('/login') }}" class="px-4 py-2 border border-blue-600 text-blue-600 rounded-full hover:bg-blue-50 transition">Login</a>
-                <a href="{{ url('/register') }}" class="px-4 py-2 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition">Register</a>
+                <a href="{{  url('/register') }}" class="px-4 py-2 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition">Register</a>
             </div>
         </div>
     </nav>
