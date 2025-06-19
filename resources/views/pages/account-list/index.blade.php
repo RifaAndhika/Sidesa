@@ -9,15 +9,7 @@
     <h1 class="h3 mb-0 text-gray-800"> Daftar Akun Penduduk</h1>
 </div>
 
-@if (session('success'))
-<script>
-    Swal.fire({
-        title: "Berhasil!",
-        text: "{{ session()->get('success') }}",
-        icon: "succes"
-    });
-</script>
-@endif
+
 
 
 <div class="row">
@@ -35,15 +27,7 @@
                                             <th>Aksi</th>
                                     </tr>
                             </thead>
-                            @if (count($users) < 1)
-                                    <tbody>
-                                            <tr>
-                                                    <td colspan="11">
-                                                             <p class=" pt-3 text-center">Tidak ada data</p>
-                                                    </td>
-                                            </tr>
-                                    </tbody>
-                            @else
+
                             <tbody>
 
                                     @foreach ( $users as $index => $item)
@@ -69,13 +53,13 @@
                                                             Aktifkan akun
                                                         </button>
 
-                                                        <form action="{{ route('users.destroy', $item->id) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus akun ini?')">
-                                                            @csrf
-                                                            @method('DELETE')
-                                                            <button type="submit" class="btn btn-sm btn-outline-danger">
-                                                                Hapus Akun
-                                                            </button>
-                                                        </form>
+                                                           <form id="delete-form-{{ $item->id }}" action="{{ route('users.destroy', $item->id) }}" method="POST">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <button type="button" class="btn btn-sm btn-danger" onclick="confirmDelete({{ $item->id }})">
+                                                                    <i class="fas fa-eraser"></i>
+                                                                </button>
+                                                            </form>
                                                     @endif
 
                                                     </div>
@@ -85,7 +69,6 @@
                                     @include('pages.account-list.confirmation-deactivate')
                                     @endforeach
                             </tbody>
-                            @endif
                            </table>
                   </div>
                      </div>
@@ -100,4 +83,48 @@
         </div>
 </div>
 
+@endsection
+
+@section('scripts')
+<script>
+
+    // SweetAlert untuk notifikasi sukses/gagal
+    @if (session('success'))
+        Swal.fire({
+            icon: 'success',
+            title: 'Berhasil!',
+            text: '{{ session('success') }}',
+            timer: 2500,
+            showConfirmButton: false
+        });
+    @endif
+
+    @if (session('error'))
+        Swal.fire({
+            icon: 'error',
+            title: 'Gagal!',
+            text: '{{ session('error') }}',
+            timer: 2500,
+            showConfirmButton: false
+        });
+    @endif
+
+    // Fungsi konfirmasi hapus
+    function confirmDelete(id) {
+        Swal.fire({
+            title: 'Yakin ingin menghapus?',
+            text: "Data tidak bisa dikembalikan!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#6c757d',
+            confirmButtonText: 'Ya, Hapus!',
+            cancelButtonText: 'Batal'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById('delete-form-' + id).submit();
+            }
+        });
+    }
+</script>
 @endsection

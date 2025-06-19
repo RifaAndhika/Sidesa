@@ -18,7 +18,7 @@
         rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
-    <!-- Fonts -->
+<!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
     {{-- <link href="{{ asset('css/app.css') }}" rel="stylesheet"> --}}
@@ -127,10 +127,21 @@
     {{-- DataTables Initializer --}}
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+
+
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdn.datatables.net/2.3.0/js/dataTables.min.js"></script>
-
-
+  <script>
+    $(document).ready(function () {
+        $('#table').DataTable({
+            paging: false,       // Nonaktifkan pagination DataTables
+            info: false,         // Nonaktifkan "Showing x to y of z entries"
+            ordering: false,     // Optional: Nonaktifkan sorting jika tidak dibutuhkan
+            searching: true,     // Aktifkan pencarian
+        });
+    });
+</script>
 
     @yield('scripts')
 

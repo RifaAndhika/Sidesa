@@ -15,7 +15,7 @@
         <div class="card shadow mb-4">
             <div class="card-body">
                 <div class="table-responsive">
-                    <table class="table table-bordered table-hover align-middle" style="width: 100%;">
+                    <table id="table" class="table table-bordered table-hover align-middle" style="width: 100%;">
                         <thead class="table-light">
                             <tr>
                                 <th>No</th>
@@ -51,9 +51,13 @@
                                         <a href="/resident/{{ $item->id }}" class="btn btn-sm btn-primary">
                                             <i class="fas fa-pen"></i>
                                         </a>
-                                        <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#confirmationDelete-{{ $item->id }}">
-                                            <i class="fas fa-trash"></i>
-                                        </button>
+                                          <form id="delete-form-{{ $item->id }}" action="{{ route('resident.destroy', $item->id) }}" method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="button" class="btn btn-sm btn-danger" onclick="confirmDelete({{ $item->id }})">
+                                                    <i class="fas fa-eraser"></i>
+                                                </button>
+                                            </form>
                                         @if (!is_null($item->user_id))
                                         <button type="button" class="btn btn-sm btn-outline-info" data-bs-toggle="modal" data-bs-target="#detailAccount-{{ $item->id }}">
                                             <i class="fas fa-user"></i>
@@ -65,9 +69,6 @@
                             @include('pages.resident.confirmation-delete')
                             @include('pages.resident.detail-account')
                             @empty
-                            <tr>
-                                <td colspan="12" class="text-center">Tidak ada data</td>
-                            </tr>
                             @endforelse
                         </tbody>
                     </table>

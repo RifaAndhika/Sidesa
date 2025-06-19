@@ -12,22 +12,6 @@
     @endif
 </div>
 
-@if(session('error'))
-    <div class="alert alert-danger">
-        {{ session('error') }}
-    </div>
-@endif
-@if (session('resident_warning'))
-    <script>
-        Swal.fire({
-            icon: 'warning',
-            title: 'Perhatian!',
-            text: '{{ session('resident_warning') }}',
-            confirmButtonText: 'Mengerti',
-            confirmButtonColor: '#3085d6'
-        });
-    </script>
-@endif
 
 <div class="row">
     <div class="col-12">
@@ -52,13 +36,7 @@
                             </tr>
                         </thead>
 
-                        @if ($complaint->isEmpty())
-                        <tbody>
-                            <tr>
-                                <td colspan="7" class="text-center">Tidak ada data</td>
-                            </tr>
-                        </tbody>
-                        @else
+
 
                         <tbody>
                             @foreach ($complaint as $index => $item)
@@ -142,7 +120,7 @@
                             @include('pages.complaints.confirmation-delete')
                             @endforeach
                         </tbody>
-                        @endif
+
                     </table>
                 </div>
             </div>

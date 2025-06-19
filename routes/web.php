@@ -8,8 +8,9 @@ use App\Models\Role;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\DB;
 
-Route::fallback(function(){
-    return view('view404');
+
+Route::fallback(function () {
+    return redirect('/');
 });
 
 Route::get('/', function () {
@@ -56,7 +57,7 @@ Route::get('/resident/create' , [ResidentController::class , 'create'])->middlew
 Route::get('/resident/{id}' , [ResidentController::class , 'edit'])->middleware('role:Admin');
 Route::post('/resident' , [ResidentController::class , 'store'])->middleware('role:Admin');
 Route::put('/resident/{id}' , [ResidentController::class , 'update'])->middleware('role:Admin');
-Route::delete('/resident/{id}' , [ResidentController::class , 'destroy'])->middleware('role:Admin');
+Route::delete('/resident/{id}' , [ResidentController::class , 'destroy'])->name('resident.destroy')->middleware('role:Admin');
 
 
 Route::get('/account-list' , [UserController::class, 'account_list_view'])->middleware('role:Admin');
