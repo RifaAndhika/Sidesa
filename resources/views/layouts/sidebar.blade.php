@@ -54,6 +54,10 @@
     <!-- Divider -->
     <hr class="sidebar-divider my-0">
 
+    <!-- Heading -->
+            <div class="sidebar-heading">
+                FITUR
+            </div>
     <!-- Nav Item - Dashboard -->
     {{-- <li class="nav-item {{ request()->is('dashboard') ? 'active' : '' }} ">
         <a class="nav-link " href="/dashboard">

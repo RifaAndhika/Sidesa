@@ -14,11 +14,28 @@
 @endif --}}
 <div class="row">
     <div class="col">
-         <form action="/complaint/{{ $complaint->id }}" method="post" enctype="multipart/form-data">
+         <form action="{{ route('complaint.update', $complaint->id) }}" method="post" enctype="multipart/form-data">
             @csrf
             @method('PUT')
             <div class="card">
                 <div class="card-body">
+
+                    <div class="form-group mb-3">
+                        <label for="category">Kategori</label>
+                        <select name="category" id="category" class="form-control @error('category') is-invalid @enderror">
+                            <option value="">-- Pilih Kategori --</option>
+                            <option value="infrastruktur" {{ old('category', $complaint->category) == 'infrastruktur' ? 'selected' : '' }}>Infrastruktur</option>
+                            <option value="kebersihan" {{ old('category', $complaint->category) == 'kebersihan' ? 'selected' : '' }}>Kebersihan</option>
+                            <option value="keamanan" {{ old('category', $complaint->category) == 'keamanan' ? 'selected' : '' }}>Keamanan</option>
+                            <option value="sosial" {{ old('category', $complaint->category) == 'sosial' ? 'selected' : '' }}>Sosial</option>
+                            <option value="kesehatan" {{ old('category', $complaint->category) == 'kesehatan' ? 'selected' : '' }}>Kesehatan</option>
+                        </select>
+                        @error('category')
+                            <span class="invalid-feedback d-block">{{ $message }}</span>
+                        @enderror
+                    </div>
+
+
                     <div class="form-group mb-3">
                         <label for="title">Judul</label>
                         <input type="text" autocomplete="off" maxlength="16" name="title" id="title" class="form-control

@@ -78,7 +78,7 @@
                                     </form>
                                     <hr>
                                     <div class="text-center">
-                                         <a class="small" href="/">Kembali </a> || <a class="small" href="/register">buat akun baru!</a>
+                                         <a class="small" href="/">Kembali </a> || <a class="small" href="{{ route('register') }}">buat akun baru!</a>
                                     </div>
                                 </div>
                             </div>

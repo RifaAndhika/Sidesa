@@ -19,6 +19,20 @@
             @method('POST')
             <div class="card">
                 <div class="card-body">
+               <div class="form-group mb-3">
+                    <label for="category">Kategori</label>
+                    <select name="category" id="category" class="form-control @error('category') is-invalid @enderror">
+                        <option value="">-- Pilih Kategori --</option>
+                        <option value="infrastruktur" {{ old('category') == 'infrastruktur' ? 'selected' : '' }}>Infrastruktur</option>
+                        <option value="kebersihan" {{ old('category') == 'kebersihan' ? 'selected' : '' }}>Kebersihan</option>
+                        <option value="keamanan" {{ old('category') == 'keamanan' ? 'selected' : '' }}>Keamanan</option>
+                        <option value="sosial" {{ old('category') == 'sosial' ? 'selected' : '' }}>Sosial</option>
+                        <option value="kesehatan" {{ old('category') == 'kesehatan' ? 'selected' : '' }}>Kesehatan</option>
+                    </select>
+                    @error('category')
+                        <span class="invalid-feedback">{{ $message }}</span>
+                    @enderror
+                </div>
                     <div class="form-group mb-3">
                         <label for="title">Judul</label>
                         <input type="text" autocomplete="off" maxlength="16" name="title" id="title" class="form-control

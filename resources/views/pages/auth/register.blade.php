@@ -94,7 +94,7 @@
                                     </form>
                                     <hr>
                                     <div class="text-center">
-                                        <a class="small" href="/">Kembali </a> || <a class="small" href="/login">Login !</a>
+                                        <a class="small" href="/">Kembali </a> || <a class="small" href="{{ route('login') }}">Login !</a>
 
                                     </div>
                                 </div>

@@ -12,6 +12,37 @@
     @endif
 </div>
 
+@if (auth()->user()->role_id == \App\Models\Role::ROLE_ADMIN)
+<form action="{{ route('complaint.index') }}" method="GET" class="mb-3">
+    <div class="row g-2 align-items-center">
+
+        <!-- Filter Kategori -->
+        <div class="col-md-4 col-sm-6">
+            <label for="filter_category" class="form-label">Filter Kategori:</label>
+            <select name="category" id="filter_category" class="form-control" onchange="this.form.submit()">
+                <option value="">Semua Kategori</option>
+                <option value="infrastruktur" {{ request('category') == 'infrastruktur' ? 'selected' : '' }}>Infrastruktur</option>
+                <option value="kebersihan" {{ request('category') == 'kebersihan' ? 'selected' : '' }}>Kebersihan</option>
+                <option value="keamanan" {{ request('category') == 'keamanan' ? 'selected' : '' }}>Keamanan</option>
+                <option value="sosial" {{ request('category') == 'sosial' ? 'selected' : '' }}>Sosial</option>
+                <option value="kesehatan" {{ request('category') == 'kesehatan' ? 'selected' : '' }}>Kesehatan</option>
+            </select>
+        </div>
+
+        <!-- Filter Status -->
+        <div class="col-md-4 col-sm-6">
+            <label for="filter_status" class="form-label">Filter Status:</label>
+            <select name="status" id="filter_status" class="form-control" onchange="this.form.submit()">
+                <option value="new" {{ request('status') == 'new' ? 'selected' : '' }}>Baru</option>
+                <option value="processing" {{ request('status') == 'processing' ? 'selected' : '' }}>Sedang Diproses</option>
+                <option value="completed" {{ request('status') == 'completed' ? 'selected' : '' }}>Selesai</option>
+            </select>
+        </div>
+
+    </div>
+</form>
+@endif
+
 
 <div class="row">
     <div class="col-12">
@@ -26,7 +57,7 @@
                                 @if (auth()->user()->role_id == \App\Models\Role::ROLE_ADMIN)
                                 <th>Nama</th>
                                 @endif
-
+                                <th style="width: 10%">Kategori</th>
                                 <th style="width: 15%">Judul</th>
                                 <th style="width: 25%">Isi Aduan</th>
                                 <th style="width: 10%">Status</th>
@@ -43,9 +74,26 @@
                             <tr>
                                 <td>{{ $complaint->firstItem() + $index }}</td>
 
+
                                 @if (auth()->user()->role_id == \App\Models\Role::ROLE_ADMIN)
                                 <td>{{ $item->resident->name }}</td>
                                 @endif
+
+                            <td>
+                                @php
+                                    $categoryBadges = [
+                                        'infrastruktur' => 'secondary',
+                                        'kebersihan' => 'success',
+                                        'keamanan' => 'warning',
+                                        'sosial' => 'info',
+                                        'kesehatan' => 'danger',
+                                    ];
+                                    $badge = $categoryBadges[$item->category] ?? 'dark';
+                                @endphp
+                                <span class="badge bg-{{ $badge }}">
+                                    {{ ucfirst($item->category) }}
+                                </span>
+                            </td>
 
                                 <td>{{ $item->title }}</td>
                                 <td>{!! nl2br(e(wordwrap($item->content, 100))) !!}</td>
@@ -146,6 +194,19 @@
             showConfirmButton: false
         });
     @endif
+
+    @if (session('resident_warning'))
+
+            Swal.fire({
+                icon: 'warning',
+                title: 'Perhatian!',
+                text: '{{ session('resident_warning') }}',
+                timer: 3000,
+                showConfirmButton: false
+            });
+
+    @endif
+
 
     @if (session('error'))
         Swal.fire({

@@ -10,31 +10,56 @@ use App\Models\User;
 use App\Notifications\ComplaintStatusChanged;
 
 class ComplaintController extends Controller
-{
-        public function index()
+ {
+            public function index(Request $request)
         {
             $user = Auth::user();
             $resident = $user->resident;
 
-            // Jika user role 2 (warga) tapi belum punya data resident, beri peringatan
+            // Jika warga tapi belum terhubung dengan data resident
             if ($user->role_id == \App\Models\Role::ROLE_USER && !$resident) {
                 session()->flash('resident_warning', 'Anda belum terhubung dengan data Penduduk. Silakan hubungi admin.');
+
+                return view('pages.complaints.index', [
+                    'complaint' => new \Illuminate\Pagination\LengthAwarePaginator([], 0, 10),
+                    'resident' => null,
+                ]);
             }
 
-            $residentId = $resident->id ?? null;
+            $query = Complaint::query()->with(['resident']);
 
-            // Ambil complaint hanya milik warga (jika warga), atau semua (jika admin)
-            $complaints = Complaint::when($user->role_id == \App\Models\Role::ROLE_USER, function ($query) use ($residentId) {
-                $query->where('resident_id', $residentId);
-            })->paginate(5);
+            // Filter berdasarkan role (warga hanya melihat aduan miliknya)
+            if ($user->role_id == \App\Models\Role::ROLE_USER) {
+                $query->where('resident_id', $resident->id);
+            }
 
-            // Tambahkan flag can_edit_delete ke setiap complaint
+            // Filter kategori
+            $category = trim($request->input('category'));
+            if (!empty($category)) {
+                $query->where('category', $category);
+            }
+
+            // Filter status
+            if ($request->filled('status')) {
+                $query->where('status', $request->status);
+            } else {
+                // Hanya admin yang default ke status 'new'
+                if ($user->role_id != \App\Models\Role::ROLE_USER) {
+                    $query->where('status', 'new');
+                }
+            }
+
+            // Ambil hasil
+            $complaints = $query->latest()->paginate(10)->withQueryString();
+
+            // Tandai aduan yang masih bisa di-edit atau delete
             foreach ($complaints as $complaint) {
                 $complaint->can_edit_delete = false;
 
                 if (
                     $user->role_id === \App\Models\Role::ROLE_USER &&
                     $resident &&
+                    $complaint->resident_id === $resident->id &&
                     $complaint->status === 'new'
                 ) {
                     $complaint->can_edit_delete = true;
@@ -55,13 +80,14 @@ class ComplaintController extends Controller
 
              $resident = Auth::user()->resident;
             if (!$resident) {
-                return redirect()->route('complaint')->with('error', 'Anda belum terhubung dengan data resident.');
+                return redirect()->route('complaint.index')->with('error', 'Anda belum terhubung dengan data resident.');
             }
             return view('pages.complaints.create');
         }
 
         public function store(Request $request){
             $request->validate([
+                'category' => 'required|in:infrastruktur,kebersihan,keamanan,sosial,kesehatan',
                 'title' => ['required', 'min:3', 'max:255'],
                 'content' => ['required', 'min:3', 'max:2000'],
                 'photo_proof' => ['nullable', 'image','mimes:jpeg,png,jpg,gif','max:2048'],
@@ -69,6 +95,7 @@ class ComplaintController extends Controller
 
             $complaint = new Complaint();
             $complaint->resident_id = Auth::user()->resident->id;
+            $complaint->category = $request->input('category');
             $complaint->title = $request->input('title');
             $complaint->content = $request->input('content');
 
@@ -78,18 +105,18 @@ class ComplaintController extends Controller
         }
 
         $complaint->save();
-        return redirect()->route('complaint')->with('success' , 'Pengaduan berhasil dikirim');
+        return redirect()->route('complaint.index')->with('success' , 'Pengaduan berhasil dikirim');
     }
         public function  edit($id){
 
                 $resident = Auth::user()->resident;
             if (!$resident) {
-                return redirect()->route('complaint')->with('error', 'Anda belum terhubung dengan data resident.');
+                return redirect()->route('complaint.index')->with('error', 'Anda belum terhubung dengan data resident.');
             }
             $complaint = Complaint::findOrFail($id);
 
              if($complaint->status !== 'new'){
-            return redirect()->route('complaint')->with('error', "Aduan tidak dapat dihapus. status aduan anda  saat ini adalah $complaint->status_label");
+            return redirect()->route('complaint.index')->with('error', "Aduan tidak dapat dihapus. status aduan anda  saat ini adalah $complaint->status_label");
         }
             return view('pages.complaints.edit' , compact(
                 'complaint'
@@ -99,12 +126,14 @@ class ComplaintController extends Controller
 
          public function update(Request $request , $id){
             $request->validate([
+                'category' => 'required|in:infrastruktur,kebersihan,keamanan,sosial,kesehatan',
                 'title' => ['required', 'min:3', 'max:255'],
                 'content' => ['required', 'min:3', 'max:2000'],
                 'photo_proof' => ['nullable', 'image','mimes:jpeg,png,jpg,gif','max:2048'],
             ]);
 
             $complaint = Complaint::findOrFail($id);
+            $complaint->category = $request->input('category');
             $complaint->resident_id = Auth::user()->resident->id;
             $complaint->title = $request->input('title');
             $complaint->content = $request->input('content');
@@ -119,7 +148,7 @@ class ComplaintController extends Controller
         }
 
         $complaint->save();
-        return redirect()->route('complaint')->with('success' , 'Berhasil mengubah Aduan');
+        return redirect()->route('complaint.index')->with('success' , 'Berhasil mengubah Aduan');
     }
 
 
@@ -127,12 +156,12 @@ class ComplaintController extends Controller
     {
         $resident = Auth::user()->resident;
         if (!$resident) {
-            return redirect()->route('complaint')->with('error', 'Anda belum terhubung dengan data penduduk.');
+            return redirect()->route('complaint.index')->with('error', 'Anda belum terhubung dengan data penduduk.');
         }
         $complaint = Complaint::findOrFail($id);
 
         if($complaint->status !== 'new'){
-            return redirect()->route('complaint')->with('error', 'Aduan tidak dapat dihapus karena sudah diproses.');
+            return redirect()->route('complaint.index')->with('error', 'Aduan tidak dapat dihapus karena sudah diproses.');
         }
 
           // Cek jika ada gambar, dan file-nya benar-benar ada di storage
@@ -141,7 +170,7 @@ class ComplaintController extends Controller
         }
         $complaint->delete();
 
-        return redirect()->route('complaint')->with('success', 'Berhasil menghapus Aduan');
+        return redirect()->route('complaint.index')->with('success', 'Berhasil menghapus Aduan');
     }
 
         public function updateStatus(Request $request, $id)

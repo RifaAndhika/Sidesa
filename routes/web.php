@@ -18,18 +18,21 @@ Route::get('/', function () {
 });
 
 
-Route::get('/login' , [AuthController::class, 'login']);
+Route::get('/login' , [AuthController::class, 'login'])->name('login');
 Route::post('/login' , [AuthController::class, 'authenticate']);
 Route::post('/logout' , [AuthController::class, 'logout']);
-Route::get('/register' , [AuthController::class, 'registerView']);
+Route::get('/register' , [AuthController::class, 'registerView'])->name('register');
 Route::post('/register' , [AuthController::class, 'register']);
 
 
+Route::middleware(['auth'])->group(function () {
+    Route::get('/dashboard', function () {
+        return view('pages.dashboard');
+    });
 
-
-Route::get('/dashboard', function () {
-    return view('pages.dashboard');
 });
+
+
 
 Route::get('/notifications' , function () {
     return view('pages.notifications.index');
@@ -45,7 +48,7 @@ Route::post('notification/{id}/read', function ($id) {
 
 
   if(isset($dataArray['complaint_id'])) {
-    return redirect()->route('complaint');
+    return redirect()->route('complaint.index');
   }
     return redirect()->back();
 })->middleware('role:Admin,User');
@@ -73,11 +76,11 @@ Route::get('/change-password', [UserController::class , 'change_password_view'])
 Route::post('/change-password/{id}', [UserController::class , 'change_password'])->middleware('role:Admin,User');
 
 
-Route::get('/complaint' , [ComplaintController::class , 'index'])->middleware('role:User,Admin')->name('complaint');
+Route::get('/complaint' , [ComplaintController::class , 'index'])->middleware('role:User,Admin')->name('complaint.index');;
 Route::get('/complaint/create' , [ComplaintController::class , 'create'])->middleware('role:User');
 Route::get('/complaint/{id}' , [ComplaintController::class , 'edit'])->middleware('role:User');
 Route::post('/complaint' , [ComplaintController::class , 'store'])->middleware('role:User');
-Route::put('/complaint/{id}' , [ComplaintController::class , 'update'])->middleware('role:User');
+Route::put('/complaint/{complaint}', [ComplaintController::class, 'update'])->name('complaint.update');
 Route::delete('/complaint/{id}', [ComplaintController::class, 'destroy'])->middleware('role:User')->name('complaint.destroy');
 Route::post('/complaint/update-status/{id}', [ComplaintController::class, 'updateStatus'])->middleware('role:Admin');
 
