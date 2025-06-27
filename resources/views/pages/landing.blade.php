@@ -31,14 +31,15 @@
 
   <!-- Navbar -->
   <nav class="bg-white shadow fixed w-full z-50">
-    <div class="container mx-auto px-4 py-4 flex justify-between items-center">
-      <h1 class="text-xl font-bold text-blue-600">Pengaduan Masyarakat</h1>
-      <div class="space-x-3">
-        <a href="{{ url('/login') }}" class="px-4 py-2 border border-blue-600 text-blue-600 rounded-full hover:bg-blue-50 transition">Login</a>
-        <a href="{{ url('/register') }}" class="px-4 py-2 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition">Daftar</a>
-      </div>
+  <div class="container mx-auto px-4 py-4 flex flex-col sm:flex-row sm:justify-between sm:items-center space-y-4 sm:space-y-0">
+    <h1 class="text-xl font-bold text-blue-600">Pengaduan Masyarakat</h1>
+    <div class="flex flex-col sm:flex-row sm:space-x-3 space-y-3 sm:space-y-0">
+      <a href="{{ url('/login') }}" class="px-4 py-2 border border-blue-600 text-blue-600 rounded-full hover:bg-blue-50 transition text-center">Login</a>
+      <a href="{{ url('/register') }}" class="px-4 py-2 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition text-center">Daftar</a>
     </div>
-  </nav>
+  </div>
+</nav>
+
 
   <!-- Hero Section -->
   <section class="text-center py-28 bg-gradient-to-r from-blue-600 to-cyan-400 text-white relative overflow-hidden">

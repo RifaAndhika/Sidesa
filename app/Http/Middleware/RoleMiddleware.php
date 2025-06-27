@@ -18,7 +18,7 @@ class RoleMiddleware
     public function handle(Request $request, Closure $next, ...$roles): Response
     {
         if(!Auth::check()){
-            return redirect('/')->withErrors([
+            return redirect('/login')->withErrors([
                 'email' => 'Silakan login terlebih dahulu',
             ]);
         }

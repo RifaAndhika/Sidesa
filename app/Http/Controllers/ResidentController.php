@@ -28,7 +28,7 @@ class ResidentController extends Controller
     public function store(Request $request){
 
         $validatedData = $request->validate([
-            'nik' => ['required', 'digits:16'],
+            'nik' => ['required','unique:residents', 'digits:16'],
             'name' => ['required',  'max:100'],
             'gender' => ['required', Rule::in(['male', 'female'])],
             'birth_date' => ['required', 'string'],
@@ -39,6 +39,8 @@ class ResidentController extends Controller
             'occupation' => ['nullable' , 'max:100'],
             'phone' => ['nullable' , 'max:15'],
             'status' => ['required' , Rule::in(['active' , 'moved' , 'deceased'])],
+        ],[
+            'nik.unique' => 'NIK sudah terdaftar',
         ]);
 
 
