@@ -24,7 +24,7 @@
                         <input type="number" autocomplete="off" maxlength="16" inputmode="numeric" name="nik" id="nik" class="form-control
                          @error('nik') is-invalid @enderror" value="{{ old('nik') }}">
                         @error('nik')
-                            <span class="is-invalid">
+                            <span class="invalid-feedback">
                                 {{ $message }}
                             </span>
                         @enderror
@@ -34,7 +34,7 @@
                         <input type="text" autocomplete="off" name="name" inputmode="numeric" id="name" class="form-control
                         @error('name') is-invalid @enderror" value="{{ old('name') }}">
                         @error('name')
-                        <span class="is-invalid">
+                        <span class="invalid-feedback">
                             {{ $message }}
                         </span>
                     @enderror
@@ -68,7 +68,7 @@
                         <input type="date" name="birth_date"  id="birth_date" class="form-control
                          @error('birth_date') is-invalid @enderror" value="{{ old('birth_date') }}">
                         @error('birth_date')
-                        <span class="invalid-feedback"
+                        <span class="invalid-feedback">
                             {{ $message }}
                         </span>
                     @enderror
@@ -78,7 +78,7 @@
                         <input type="text" name="birth_place" autocomplete="off"  id="birth_place" class="form-control
                          @error('birth_place') is-invalid @enderror" value="{{ old('birth_place') }}">
                         @error('birth_place')
-                        <span class="invalid-feedback"
+                        <span class="invalid-feedback">
                             {{ $message }}
                         </span>
                     @enderror
@@ -88,7 +88,7 @@
                         <textarea name="address" id="address" cols="30" rows="10" class="form-control
                         @error('address') is-invalid @enderror">{{ old('address') }}</textarea>
                         @error('address')
-                        <span class="invalid-feedback"
+                        <span class="invalid-feedback">
                             {{ $message }}
                         </span>
                     @enderror
@@ -98,7 +98,7 @@
                         <input type="text" autocomplete="off" name="religion"  id="religion" class="form-control
                          @error('religion') is-invalid @enderror" value="{{ old('religion') }}">
                         @error('religion')
-                        <span class="invalid-feedback"
+                        <span class="invalid-feedback">
                             {{ $message }}
                         </span>
                     @enderror
@@ -130,7 +130,7 @@
                                 @endforeach
                             </select>
                             @error('marital_status')
-                            <span class="invalid-feedback"
+                            <span class="invalid-feedback">
                                 {{ $message }}
                             </span>
                         @enderror
@@ -140,7 +140,7 @@
                         <input type="text" autocomplete="off" name="occupation"  id="occupation" class="form-control
                         @error('occupation') is-invalid @enderror" value="{{ old('occupation') }}">
                         @error('occupation')
-                        <span class="invalid-feedback"
+                        <span class="invalid-feedback">
                             {{ $message }}
                         </span>
                     @enderror
@@ -150,7 +150,7 @@
                         <input type="number" autocomplete="off" maxlength="13" minlength="12" name="phone" inputmode="numeric"  id="phone" class="form-control
                         @error('phone') is-invalid @enderror" value="{{ old('phone') }}">
                         @error('phone')
-                        <span class="invalid-feedback"
+                        <span class="invalid-feedback">
                             {{ $message }}
                         </span>
                     @enderror
@@ -177,7 +177,7 @@
                             @endforeach
                         </select>
                             @error('status')
-                            <span class="invalid-feedback"
+                            <span class="invalid-feedback">
                                 {{ $message }}
                             </span>
                         @enderror

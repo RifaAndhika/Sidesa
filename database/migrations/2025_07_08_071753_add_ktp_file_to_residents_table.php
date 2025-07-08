@@ -12,19 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('residents', function (Blueprint $table) {
-         $table->unsignedBigInteger('user_id')->nullable()->after('id');
-
-         $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->string('ktp_file')->nullable()->after('user_id');
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::table('residents', function (Blueprint $table) {
-            $table->dropColumn('user_id');
+            $table->dropColumn('ktp_file');
         });
     }
 };

@@ -1,121 +1,138 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 
 <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login SiDesa</title>
 
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet" />
 
-    <title>Login SiDesa</title>
+  <!-- SweetAlert2 -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    <!-- Custom fonts for this template-->
-    <link href="{{ asset('template/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
-    <link
-        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-        rel="stylesheet">
+  <!-- Custom Style -->
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Nunito', sans-serif;
+    }
 
-    <!-- Custom styles for this template-->
-    <link href="{{ asset('template/css/sb-admin-2.min.css') }}" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    body {
+      margin: 0;
+      background: linear-gradient(to right, #3b66c2, #597be9);
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
 
+    .login-card {
+      background-color: white;
+      padding: 40px 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 400px;
+    }
+
+    .login-card h1 {
+      text-align: center;
+      margin-bottom: 24px;
+      font-size: 22px;
+      color: #333;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 25px;
+      outline: none;
+    }
+
+    button[type="submit"] {
+      width: 100%;
+      padding: 12px;
+      background-color: #4e73df;
+      border: none;
+      color: white;
+      border-radius: 25px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button[type="submit"]:hover {
+      background-color: #3756c0;
+    }
+
+    .text-center {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .text-center a {
+      color: #4e73df;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    .text-center a:hover {
+      text-decoration: underline;
+    }
+  </style>
 </head>
 
-<body class="bg-gradient-primary">
+<body>
 
-    {{-- @if ($errors->any())
-      @dd($errors->all())
+  @if ($errors->any())
+  <script>
+    Swal.fire({
+      title: "Terjadi Kesalahan!",
+      text: "@foreach ($errors->all() as $error) {{ $error }}{{ $loop->last ? '.' : ',' }} @endforeach",
+      icon: "error"
+    });
+  </script>
+  @endif
 
-    @endif --}}
+  <div class="login-card">
+    <h1>Masuk SiDesa</h1>
+    <form action="/login" method="POST" onsubmit="document.getElementById('submitBtn').disabled = true; document.getElementById('submitBtn').textContent = 'Loading...';">
+      @csrf
+      @method('POST')
 
-    @if ($errors->any())
-    <script>
-        Swal.fire({
-            title: "Terjadi Kesalahan!",
-            text: "@foreach ( $errors->all() as $error ) {{ $error }}  {{ $loop->last ? '.' : ',' }}@endforeach",
-            icon: "error"
-        });
-    </script>
-    @endif
-
-    <div class="container">
-
-        <!-- Outer Row -->
-        <div class="row justify-content-center">
-
-            <div class="col-xl-10 col-lg-12 col-md-9">
-
-                <div class="card o-hidden border-0 shadow-lg my-5">
-                    <div class="card-body p-0">
-                        <!-- Nested Row within Card Body -->
-                        <div class="row">
-                            <div class="col-lg-6 d-none d-lg-block bg-login-image"></div>
-                            <div class="col-lg-6">
-                                <div class="p-5">
-                                    <div class="text-center">
-                                        <h1 class="h4 text-gray-900 mb-4">Selamat Datang Kembali</h1>
-                                    </div>
-                                    <form class="user" action="/login" method="post" onsubmit="const submitBtn = document.getElementById('submitBtn'); submitBtn.disabled
-                                    = true; submitBtn.textContent = 'Loading...';">
-                                         @csrf
-                                         @method('POST')
-                                        <div class="form-group">
-                                            <input type="email" autocomplete="off" name="email" class="form-control form-control-user"
-                                                id="InputEmail" aria-describedby="emailHelp"
-                                                placeholder="Enter Email Address...">
-                                        </div>
-                                        <div class="form-group">
-                                            <input type="password" autocomplete="off" name="password" class="form-control form-control-user"
-                                                id="InputPassword" placeholder="Password">
-                                        </div>
-
-                                        <button id="submitBtn" type="submit" class="btn btn-primary btn-user btn-block">
-                                            Login
-                                        </button>
-
-                                    </form>
-                                    <hr>
-                                    <div class="text-center">
-                                         <a class="small" href="/">Kembali </a> || <a class="small" href="{{ route('register') }}">buat akun baru!</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-
-        </div>
-
+      <div class="form-group">
+        <input type="email" name="email" placeholder="Enter Email Address..." autocomplete="off" required />
+      </div>
+      <div class="form-group">
+        <input type="password" name="password" placeholder="Password" autocomplete="off" required />
+      </div>
+      <button type="submit" id="submitBtn">Login</button>
+    </form>
+    <div class="text-center">
+      <a href="/">Kembali</a> || <a href="{{ route('register') }}">buat akun baru!</a>
     </div>
+  </div>
 
-    <!-- Bootstrap core JavaScript-->
-    <script src="{{ asset('template/vendor/jquery/jquery.min.js') }}"></script>
-    <script src="{{ asset('template/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+  @if(session('success'))
+  <script>
+    Swal.fire({
+      icon: 'success',
+      title: 'Berhasil!',
+      text: '{{ session('success') }}',
+      timer: 3000,
+      showConfirmButton: false
+    });
+  </script>
+  @endif
 
-    <!-- Core plugin JavaScript-->
-    <script src="{{ asset('template/vendor/jquery-easing/jquery.easing.min.js') }}"></script>
-
-    <!-- Custom scripts for all pages-->
-    <script src="{{ asset('template/js/sb-admin-2.min.js') }}"></script>
-
-    <!-- SweetAlert2 -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-    <script>
-        @if(session('success'))
-            Swal.fire({
-                icon: 'success',
-                title: 'Berhasil!',
-                text: '{{ session('success') }}',
-                timer: 3000,
-                showConfirmButton: false
-            });
-        @endif
-    </script>
 </body>
 
 </html>

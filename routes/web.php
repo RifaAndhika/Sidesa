@@ -56,11 +56,11 @@ Route::post('notification/{id}/read', function ($id) {
 
 
 Route::get('/resident' , [ResidentController::class , 'index'])->middleware('role:Admin');
-Route::get('/resident/create' , [ResidentController::class , 'create'])->middleware('role:Admin');
-Route::get('/resident/{id}' , [ResidentController::class , 'edit'])->middleware('role:Admin');
-Route::post('/resident' , [ResidentController::class , 'store'])->middleware('role:Admin');
-Route::put('/resident/{id}' , [ResidentController::class , 'update'])->middleware('role:Admin');
-Route::delete('/resident/{id}' , [ResidentController::class , 'destroy'])->name('resident.destroy')->middleware('role:Admin');
+// Route::get('/resident/create' , [ResidentController::class , 'create'])->middleware('role:Admin');
+// Route::post('/resident' , [ResidentController::class , 'store'])->middleware('role:Admin');
+// Route::get('/resident/{id}' , [ResidentController::class , 'edit'])->middleware('role:Admin');
+// Route::put('/resident/{id}' , [ResidentController::class , 'update'])->middleware('role:Admin');
+// Route::delete('/resident/{id}' , [ResidentController::class , 'destroy'])->name('resident.destroy')->middleware('role:Admin');
 
 
 Route::get('/account-list' , [UserController::class, 'account_list_view'])->middleware('role:Admin');

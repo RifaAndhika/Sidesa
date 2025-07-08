@@ -14,10 +14,6 @@ class ComplaintSeeder extends Seeder
      */
     public function run(): void
     {
-        Complaint::create([
-            'resident_id' => 1,
-            'title' => 'Pengaduan 1',
-            'content' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, autem.',
-        ]);
+
     }
 }

@@ -16,16 +16,6 @@ class ComplaintController extends Controller
             $user = Auth::user();
             $resident = $user->resident;
 
-            // Jika warga tapi belum terhubung dengan data resident
-            if ($user->role_id == \App\Models\Role::ROLE_USER && !$resident) {
-                session()->flash('resident_warning', 'Anda belum terhubung dengan data Penduduk. Silakan hubungi admin.');
-
-                return view('pages.complaints.index', [
-                    'complaint' => new \Illuminate\Pagination\LengthAwarePaginator([], 0, 10),
-                    'resident' => null,
-                ]);
-            }
-
             $query = Complaint::query()->with(['resident']);
 
             // Filter berdasarkan role (warga hanya melihat aduan miliknya)
@@ -79,9 +69,7 @@ class ComplaintController extends Controller
         public function create(){
 
              $resident = Auth::user()->resident;
-            if (!$resident) {
-                return redirect()->route('complaint.index')->with('error', 'Anda belum terhubung dengan data resident.');
-            }
+
             return view('pages.complaints.create');
         }
 
@@ -155,9 +143,9 @@ class ComplaintController extends Controller
     public function destroy($id)
     {
         $resident = Auth::user()->resident;
-        if (!$resident) {
-            return redirect()->route('complaint.index')->with('error', 'Anda belum terhubung dengan data penduduk.');
-        }
+        // if (!$resident) {
+        //     return redirect()->route('complaint.index')->with('error', 'Anda belum terhubung dengan data penduduk.');
+        // }
         $complaint = Complaint::findOrFail($id);
 
         if($complaint->status !== 'new'){

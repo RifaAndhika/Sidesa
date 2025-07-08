@@ -46,7 +46,7 @@
     <div class="container mx-auto px-4 fade-in-up">
       <h2 class="text-5xl font-bold mb-4">Laporkan Masalah Sekitar Anda</h2>
       <p class="text-lg max-w-xl mx-auto mb-6">Kami hadir untuk membantu menyampaikan aspirasi dan pengaduan masyarakat secara mudah, cepat, dan transparan.</p>
-      <a href="{{ url('/register') }}" class="inline-block px-6 py-3 bg-white text-blue-600 font-semibold rounded-full hover:bg-gray-100 transition">Mulai Lapor</a>
+      {{-- <a href="{{ url('/register') }}" class="inline-block px-6 py-3 bg-white text-blue-600 font-semibold rounded-full hover:bg-gray-100 transition">Mulai Lapor</a> --}}
     </div>
   </section>
 
@@ -81,8 +81,8 @@
   <section class="py-16 bg-white">
     <div class="container mx-auto px-4 max-w-4xl text-center">
       <h3 class="text-3xl font-bold text-blue-700 mb-6">Tentang Pengembang</h3>
-      <p class="text-lg mb-4">Halo! Saya <strong>Rifa Andhika</strong>, mahasiswa <strong>Teknik Informatika</strong> semester 2. Aplikasi ini adalah bagian dari pembelajaran saya di bidang <strong>Web Development</strong>, dengan fokus pada Laravel dan UX design.</p>
-      <p class="text-lg">Tujuan saya adalah membangun portofolio yang berdampak dan bermanfaat bagi masyarakat luas, khususnya dalam dunia IT dan digitalisasi layanan publik.</p>
+      <p class="text-lg mb-4">Halo! Kami <strong>Kelompok 6</strong>, mahasiswa <strong>Teknik Informatika</strong> semester 2. Aplikasi ini adalah bagian dari pembelajaran kami dalam mata kuliah <strong>Pemrograman Web</strong>, dengan fokus pada Laravel.</p>
+      <p class="text-lg">Tujuan kami adalah membangun portofolio yang berdampak dan bermanfaat bagi masyarakat luas, khususnya dalam dunia IT dan digitalisasi layanan publik.</p>
     </div>
   </section>
 
@@ -95,7 +95,7 @@
 
   <!-- Footer -->
   <footer class="text-center py-6 text-sm text-gray-500 bg-gray-100">
-    &copy; {{ date('Y') }} - Dibuat dengan ❤️ oleh Rifa Andhika
+    &copy; {{ date('Y') }} - Dibuat dengan ❤️ oleh Kelompok 6
   </footer>
 
 </body>

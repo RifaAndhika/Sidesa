@@ -9,7 +9,7 @@
             (object) [
                 'title' => 'Penduduk',
                 'path' => 'resident',
-                'icon' => 'fas fa-fw fa-table',
+                'icon' => 'fas fa-users',
             ],
             (object) [
                 'title' => 'Daftar akun',
@@ -19,7 +19,7 @@
             (object) [
                 'title' => 'Permintaan akun',
                 'path' => 'account-request',
-                'icon' => 'fas fa-fw fa-user',
+                'icon' => 'fas fa-fw fa-user-plus',
             ],
             (object) [
                 'title' => 'Aduan Warga',

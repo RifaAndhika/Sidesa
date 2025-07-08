@@ -1,13 +1,15 @@
 @extends('layouts.app')
 
+@section('title', 'Data Penduduk')
+
 @section('content')
 
 <!-- Page Heading -->
 <div class="d-flex justify-content-between align-items-center mb-4">
     <h1 class="h3 text-gray-800">Data Penduduk</h1>
-    <a href="/resident/create" class="btn btn-sm btn-primary shadow-sm">
+    {{-- <a href="/resident/create" class="btn btn-sm btn-primary shadow-sm">
         <i class="fas fa-plus fa-sm text-white-50"></i> Tambah
-    </a>
+    </a> --}}
 </div>
 
 <div class="row">
@@ -28,8 +30,7 @@
                                 <th>Status Kawin</th>
                                 <th>Pekerjaan</th>
                                 <th>Telepon</th>
-                                <th>Status</th>
-                                <th style="min-width: 120px;">Aksi</th>
+                                <th style="min-width: 120px;">Akun Terhubung</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -37,18 +38,17 @@
                             <tr>
                                 <td>{{ $residents->firstItem() + $index }}</td>
                                 <td>{{ $item->nik }}</td>
-                                <td>{{ $item->name }}</td>
-                                <td>{{ $item->gender }}</td>
+                                <td>{{ $item->user->name ?? '-' }}</td>
+                                <td>{{ $item->gender_label }}</td>
                                 <td>{{ $item->birth_place }}, {{ $item->birth_date }}</td>
                                 <td>{{ $item->address }}</td>
                                 <td>{{ $item->religion }}</td>
-                                <td>{{ $item->marital_status }}</td>
+                                <td>{{ $item->marital_status_label }}</td>
                                 <td>{{ $item->occupation }}</td>
                                 <td>{{ $item->phone }}</td>
-                                <td>{{ $item->status }}</td>
                                 <td>
                                     <div class="d-flex justify-content-center align-items-center gap-2 flex-nowrap">
-                                        <a href="/resident/{{ $item->id }}" class="btn btn-sm btn-primary">
+                                        {{-- <a href="/resident/{{ $item->id }}" class="btn btn-sm btn-primary">
                                             <i class="fas fa-pen"></i>
                                         </a>
                                           <form id="delete-form-{{ $item->id }}" action="{{ route('resident.destroy', $item->id) }}" method="POST">
@@ -57,7 +57,7 @@
                                                 <button type="button" class="btn btn-sm btn-danger" onclick="confirmDelete({{ $item->id }})">
                                                     <i class="fas fa-eraser"></i>
                                                 </button>
-                                            </form>
+                                            </form> --}}
                                         @if (!is_null($item->user_id))
                                         <button type="button" class="btn btn-sm btn-outline-info" data-bs-toggle="modal" data-bs-target="#detailAccount-{{ $item->id }}">
                                             <i class="fas fa-user"></i>
@@ -83,7 +83,7 @@
         </div>
     </div>
 </div>
-
+{{--
 @section('scripts')
 <script>
     // SweetAlert untuk sukses tambah/edit
@@ -128,6 +128,6 @@ function confirmDelete(id) {
 }
 </script>
 
-@endsection
+@endsection --}}
 
 @endsection
