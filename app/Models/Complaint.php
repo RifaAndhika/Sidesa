@@ -28,4 +28,8 @@ class Complaint extends Model
             return $this->belongsTo(Resident::class);
         }
 
+        public function user() {
+            return $this->belongsTo(User::class);
+        }
+
     }

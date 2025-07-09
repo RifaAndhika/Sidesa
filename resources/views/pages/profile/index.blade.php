@@ -30,6 +30,21 @@
         <form action="/profile/{{ auth()->user()->id }}" method="post">
             @csrf
 
+                @if (auth()->user()->role_id == \App\Models\Role::ROLE_USER)
+
+                   <div class="mb-3 text-center">
+                            <label class="d-block mb-2"><strong>Foto KTP:</strong></label>
+                          <img
+                                src="{{ asset('storage/' . auth()->user()->resident->ktp_file) }}"
+                                alt="Foto KTP"
+                                class="img-thumbnail shadow-sm"
+                                style="width: 100%; max-width: 600px; max-height: 450px; object-fit: contain;"
+                            >
+
+                        </div>
+
+                @endif
+
             <div class="card">
                 <div class="card-body">
                     {{-- Nama --}}

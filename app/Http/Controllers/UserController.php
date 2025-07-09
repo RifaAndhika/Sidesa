@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
+use App\Models\Complaint;
 
 class UserController extends Controller
 {
@@ -83,6 +86,11 @@ class UserController extends Controller
         }
         public function update_profile(Request $request, $UserId)
             {
+                 $user = Auth::user();
+                $resident = $user->resident;
+
+                 $query = Complaint::query()->with(['resident.user']);
+
                 $user = User::findOrFail($UserId);
 
                 // Jika Admin: hanya update name

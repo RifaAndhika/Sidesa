@@ -16,7 +16,7 @@ class ComplaintController extends Controller
             $user = Auth::user();
             $resident = $user->resident;
 
-            $query = Complaint::query()->with(['resident']);
+            $query = Complaint::query()->with(['resident.user']);
 
             // Filter berdasarkan role (warga hanya melihat aduan miliknya)
             if ($user->role_id == \App\Models\Role::ROLE_USER) {

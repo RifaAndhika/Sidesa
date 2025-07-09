@@ -76,7 +76,7 @@
 
 
                                 @if (auth()->user()->role_id == \App\Models\Role::ROLE_ADMIN)
-                                <td>{{ $item->resident->name }}</td>
+                                <td>{{ $item->resident->user->name ?? '-' }}</td>
                                 @endif
 
                             <td>
