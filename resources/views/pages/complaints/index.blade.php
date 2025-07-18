@@ -4,7 +4,7 @@
 
 @section('content')
 
-<div class="d-sm-flex align-items-center justify-content-between mb-4">
+<div class="d-flex justify-content-between align-items-center mb-4 animate__animated animate__fadeInUp animate__delay-0.5s">
     <h1 class="h3 mb-0 text-gray-800">{{ auth()->user()->role_id == \App\Models\Role::ROLE_ADMIN ? 'Aduan Warga' : 'Aduan' }}</h1>
     @if($resident)
         <a href="/complaint/create" class="btn btn-primary">Buat Aduan +</a>
@@ -17,7 +17,7 @@
     <div class="row g-2 align-items-center">
 
         <!-- Filter Kategori -->
-        <div class="col-md-4 col-sm-6">
+        <div class="col-md-4 col-sm-6 animate__animated animate__fadeInUp animate__delay-0.5s ">
             <label for="filter_category" class="form-label">Filter Kategori:</label>
             <select name="category" id="filter_category" class="form-control" onchange="this.form.submit()">
                 <option value="">Semua Kategori</option>
@@ -30,7 +30,7 @@
         </div>
 
         <!-- Filter Status -->
-        <div class="col-md-4 col-sm-6">
+        <div class="col-md-4 col-sm-6 animate__animated animate__fadeInUp animate__delay-0.5s">
             <label for="filter_status" class="form-label">Filter Status:</label>
             <select name="status" id="filter_status" class="form-control" onchange="this.form.submit()">
                 <option value="new" {{ request('status') == 'new' ? 'selected' : '' }}>Baru</option>
@@ -44,12 +44,12 @@
 @endif
 
 
-<div class="row">
+<div class="row animate__animated animate__fadeInUp animate__delay-0.5s">
     <div class="col-12">
         <div class="card shadow mb-4">
             <div class="card-body">
                 <div class="table-responsive">
-                    <table id="table" class="table table-bordered table-hover w-100" id="complaintsTable" width="100%" cellspacing="0">
+                    <table id="table" class="table table-bordered  table-hover w-100" id="complaintsTable" width="100%" cellspacing="0">
                         <thead class="table-light">
                             <tr>
                                 <th style="width: 5%">No</th>
@@ -124,9 +124,10 @@
                                         @php
                                             $filePath = 'storage/' . $item->photo_proof;
                                         @endphp
-                                        <a href="{{ asset($filePath) }}" target="_blank" rel="noopener noreferrer">
-                                            <img src="{{ asset($filePath) }}" alt="Foto Bukti" class="img-thumbnail" style="width: 150px; height: 100px; object-fit: cover;"></img>
+                                       <a href="{{ asset('storage/' . $item->photo_proof) }}" target="_blank" rel="noopener noreferrer">
+                                            <img src="{{ asset('storage/' . $item->photo_proof) }}" alt="Foto Bukti" class="img-thumbnail" style="width: 150px; height: 100px; object-fit: cover;">
                                         </a>
+
                                     @else
                                         Tidak Ada
                                     @endif

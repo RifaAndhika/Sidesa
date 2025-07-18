@@ -11,7 +11,7 @@
 
   <!-- SweetAlert2 -->
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
   <!-- Custom Style -->
   <style>
     * {
@@ -102,7 +102,7 @@
   </script>
   @endif
 
-  <div class="login-card">
+  <div class="login-card animate__animated animate__fadeInUp animate__delay-0.5s">
     <h1>Masuk SiDesa</h1>
     <form action="/login" method="POST" onsubmit="document.getElementById('submitBtn').disabled = true; document.getElementById('submitBtn').textContent = 'Loading...';">
       @csrf

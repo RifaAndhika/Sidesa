@@ -125,14 +125,7 @@
                             <input type="text" name="phone" id="phone" class="form-control"
                                    value="{{ old('phone', auth()->user()->resident->phone ?? '') }}">
                         </div>
-                        <div class="form-group mb-3">
-                            <label for="status">Status</label>
-                            <select name="status" id="status" class="form-control">
-                                <option value="active" {{ (auth()->user()->resident->status ?? '') == 'active' ? 'selected' : '' }}>Aktif</option>
-                                <option value="moved" {{ (auth()->user()->resident->status ?? '') == 'moved' ? 'selected' : '' }}>Pindah</option>
-                                <option value="deceased" {{ (auth()->user()->resident->status ?? '') == 'deceased' ? 'selected' : '' }}>Meninggal</option>
-                            </select>
-                        </div>
+
                     @endif
 
                 </div>

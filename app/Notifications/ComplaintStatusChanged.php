@@ -6,8 +6,10 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
+use Illuminate\Broadcasting\PrivateChannel;
 
-class ComplaintStatusChanged extends Notification
+class ComplaintStatusChanged extends Notification implements ShouldBroadcast
 {
     use Queueable;
 
@@ -30,7 +32,7 @@ class ComplaintStatusChanged extends Notification
      */
     public function via(object $notifiable): array
     {
-        return ['database'];
+        return ['database' , 'broadcast'];
     }
 
     /**
@@ -60,4 +62,19 @@ class ComplaintStatusChanged extends Notification
              '{$this->oldStatus}' menjadi '{$this->newStatus}' "
         ];
     }
+
+              public function broadcastOn()
+                {
+                    return new PrivateChannel('notifications.' . $this->complaint->resident->user->id);
+                }
+
+                public function broadcastWith()
+                {
+                    return [
+                        'message' => "Status Aduan '{$this->complaint->title}' berubah dari '{$this->oldStatus}' menjadi '{$this->newStatus}'",
+                        'created_at' => now()->diffForHumans()
+                    ];
+                }
+
+
 }

@@ -21,7 +21,8 @@
                 <div class="card-body">
                <div class="form-group mb-3">
                     <label for="category">Kategori</label>
-                    <select name="category" id="category" class="form-control @error('category') is-invalid @enderror">
+                    <select name="category" id="category" class="form-control @error('category') is-invalid @enderror"
+                       value="{{ old('category') }}">
                         <option value="">-- Pilih Kategori --</option>
                         <option value="infrastruktur" {{ old('category') == 'infrastruktur' ? 'selected' : '' }}>Infrastruktur</option>
                         <option value="kebersihan" {{ old('category') == 'kebersihan' ? 'selected' : '' }}>Kebersihan</option>
@@ -29,41 +30,44 @@
                         <option value="sosial" {{ old('category') == 'sosial' ? 'selected' : '' }}>Sosial</option>
                         <option value="kesehatan" {{ old('category') == 'kesehatan' ? 'selected' : '' }}>Kesehatan</option>
                     </select>
-                    @error('category')
-                        <span class="invalid-feedback">{{ $message }}</span>
-                    @enderror
+                     @error('category') <div class="invalid-feedback">{{ $message }}</div> @enderror
                 </div>
+
                     <div class="form-group mb-3">
-                        <label for="title">Judul</label>
-                        <input type="text" autocomplete="off" maxlength="16" name="title" id="title" class="form-control
-                         @error('title') is-invalid @enderror" value="{{ old('title') }}">
+                        <label for="title">Judul <span class="text-danger">*</span></label>
+                        <input type="text" autocomplete="off" maxlength="16" name="title" id="title"
+                            class="form-control @error('title') is-invalid @enderror"
+                            value="{{ old('title') }}">
                         @error('title')
-                            <span class="is-invalid">
+                            <div class="invalid-feedback">
                                 {{ $message }}
-                            </span>
+                            </div>
                         @enderror
                     </div>
 
-                       <div class="form-group mb-3">
-                        <label for="content">Isi Aduan</label>
-                        <textarea name="content" id="content" cols="30" rows="10" class="form-control
-                        @error('content') is-invalid @enderror">{{ old('content') }}</textarea>
+                     <div class="form-group mb-3">
+                        <label for="content">Isi Aduan <span class="text-danger">*</span></label>
+                        <textarea name="content" id="content" cols="30" rows="10"
+                            class="form-control @error('content') is-invalid @enderror">
+                            {{ old('content') }}</textarea>
                         @error('content')
-                        <span class="invalid-feedback"
-                            {{ $message }}
-                        </span>
-                    @enderror
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                        @enderror
                     </div>
+
                     <div class="form-group mb-3">
-                        <label for="photo_proof">Bukti Foto</label>
-                        <input type="file" autocomplete="off" name="photo_proof" inputmode="numeric" id="photo_proof" class="form-control
-                        @error('photo_proof') is-invalid @enderror" value="{{ old('photo_proof') }}">
+                        <label for="photo_proof">Bukti Foto <span class="text-danger">*</span></label>
+                        <input type="file" name="photo_proof" id="photo_proof"
+                            class="form-control @error('photo_proof') is-invalid @enderror">
                         @error('photo_proof')
-                        <span class="is-invalid">
-                            {{ $message }}
-                        </span>
-                    @enderror
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                        @enderror
                     </div>
+
                 </div>
             </div>
 

@@ -30,6 +30,11 @@
     <!-- Custom styles for this template-->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+
+
 </head>
 
 <body id="page-top">
@@ -144,7 +149,41 @@
             searching: true,     // Aktifkan pencarian
         });
     });
+
 </script>
+
+<script>
+    @auth
+    window.Echo.private(`notifications.{{ auth()->user()->id }}`)
+        .listen('.Illuminate\\Notifications\\Events\\BroadcastNotificationCreated', (e) => {
+            // Update counter
+            const badge = document.querySelector('.badge-counter');
+            badge.innerText = parseInt(badge.innerText) + 1;
+
+            // Buat elemen notifikasi baru
+            const item = `
+                <form method="POST" action="/notification/${e.id}/read" class="w-100">
+                    <div class="dropdown-item d-flex align-items-center" style="background-color: rgba(115,195,255,0.1); cursor:pointer;" onclick="this.closest('form').submit()">
+                        <input type="hidden" name="_token" value='{{ csrf_token() }}'>
+                        <div class="mr-3">
+                            <div class="icon-circle bg-primary">
+                                <i class="fas fa-file-alt text-white"></i>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="small text-gray-500">${e.created_at}</div>
+                            <span class="font-weight-bold">${e.message}</span>
+                        </div>
+                    </div>
+                </form>
+            `;
+
+            document.querySelector('.dropdown-list').insertAdjacentHTML('afterbegin', item);
+        });
+    @endauth
+</script>
+
+
 
     @yield('scripts')
 

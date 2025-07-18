@@ -14,6 +14,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+
     <style>
         body {
             font-family: 'Nunito', sans-serif;
@@ -38,7 +40,7 @@
 
 <body>
 
-<div class="container py-5">
+<div class="container py-5 animate__animated animate__fadeInUp animate__delay-0.5s">
     <div class="row justify-content-center">
         <div class="col-lg-10">
             <div class="card p-4">

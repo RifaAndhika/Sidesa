@@ -23,12 +23,12 @@
     <ul class="navbar-nav ml-auto">
 
         <!-- Nav Item - Search Dropdown (Visible Only XS) -->
-        <li class="nav-item dropdown no-arrow d-sm-none">
+        {{-- <li class="nav-item dropdown no-arrow d-sm-none">
             <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="fas fa-search fa-fw"></i>
             </a>
-            <!-- Dropdown - Messages -->
+            {{-- <!-- Dropdown - Messages -->
             <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
                 aria-labelledby="searchDropdown">
                 <form class="form-inline mr-auto w-100 navbar-search">
@@ -43,8 +43,8 @@
                         </div>
                     </div>
                 </form>
-            </div>
-        </li>
+            </div> --}}
+        {{-- </li> --}}
 
         <!-- Nav Item - Alerts -->
         @if (auth()->user()->role_id == \App\Models\Role::ROLE_USER )
@@ -63,7 +63,7 @@
                     Notifikasi
                 </h6>
 
-              @foreach(auth()->user()->notifications as $notification)
+              @foreach(auth()->user()->notifications->take(3) as $notification)
                 <form id="formNotification-{{ $notification->id }}" action="/notification/{{ $notification->id }}/read" method="POST" class="w-100">
                    <div class="dropdown-item d-flex align-items-center"
                         style="background-color: rgba(115, 195, 255, {{ is_null($notification->read_at) ? '0.1' : '0.0' }}); cursor: pointer;"

@@ -36,7 +36,7 @@ Route::middleware(['auth'])->group(function () {
 
 Route::get('/notifications' , function () {
     return view('pages.notifications.index');
-})->middleware('role:Admin,User');
+})->middleware('role:User');
 
 Route::post('notification/{id}/read', function ($id) {
     $notification = DB::table('notifications')->where('id', $id);
@@ -51,16 +51,11 @@ Route::post('notification/{id}/read', function ($id) {
     return redirect()->route('complaint.index');
   }
     return redirect()->back();
-})->middleware('role:Admin,User');
+})->middleware('role:User');
 
 
 
 Route::get('/resident' , [ResidentController::class , 'index'])->middleware('role:Admin');
-// Route::get('/resident/create' , [ResidentController::class , 'create'])->middleware('role:Admin');
-// Route::post('/resident' , [ResidentController::class , 'store'])->middleware('role:Admin');
-// Route::get('/resident/{id}' , [ResidentController::class , 'edit'])->middleware('role:Admin');
-// Route::put('/resident/{id}' , [ResidentController::class , 'update'])->middleware('role:Admin');
-// Route::delete('/resident/{id}' , [ResidentController::class , 'destroy'])->name('resident.destroy')->middleware('role:Admin');
 
 
 Route::get('/account-list' , [UserController::class, 'account_list_view'])->middleware('role:Admin');

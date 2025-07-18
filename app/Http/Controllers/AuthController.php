@@ -117,7 +117,7 @@ class AuthController extends Controller
             ]);
 
             // Upload file KTP
-            $ktpPath = $request->file('ktp_file')->store('ktp', 'public');
+            $ktpPath = $request->file('ktp_file')->store('public/ktp');
 
             // Simpan ke Resident
             Resident::create([

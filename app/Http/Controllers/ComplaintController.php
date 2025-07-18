@@ -40,7 +40,7 @@ class ComplaintController extends Controller
             }
 
             // Ambil hasil
-            $complaints = $query->latest()->paginate(10)->withQueryString();
+            $complaints = $query->latest()->paginate(5)->withQueryString();
 
             // Tandai aduan yang masih bisa di-edit atau delete
             foreach ($complaints as $complaint) {
@@ -78,7 +78,12 @@ class ComplaintController extends Controller
                 'category' => 'required|in:infrastruktur,kebersihan,keamanan,sosial,kesehatan',
                 'title' => ['required', 'min:3', 'max:255'],
                 'content' => ['required', 'min:3', 'max:2000'],
-                'photo_proof' => ['nullable', 'image','mimes:jpeg,png,jpg,gif','max:2048'],
+                'photo_proof' => ['required', 'image','mimes:jpeg,png,jpg,gif','max:2048'],
+            ],[
+                'category.required' => 'Kategori wajib diisi',
+                'title.required' => 'Judul wajib diisi',
+                'content.required' => 'catatan wajib diisi',
+                'photo_proof.required' => 'Bukti wajib diisi',
             ]);
 
             $complaint = new Complaint();
